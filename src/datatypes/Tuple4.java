@@ -1,4 +1,4 @@
-package datatypes;
+package src.datatypes;
 
 public class Tuple4<T1, T2, T3, T4> {
     private final T1 item1;

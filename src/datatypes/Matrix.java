@@ -1,33 +1,31 @@
-package datatypes;
+package src.datatypes;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Matrix {
-    private List<List<Integer>> data;
+    private List<List<Double>> data;
 
-    // Constructor that takes number of rows and columns
     public Matrix(int rows, int cols) {
         data = new ArrayList<>();
         for (int i = 0; i < rows; i++) {
-            List<Integer> row = new ArrayList<>();
+            List<Double> row = new ArrayList<>();
             for (int j = 0; j < cols; j++) {
-                row.add(0); // Initialize with default value, e.g., 0
+                row.add(0.0); 
             }
             data.add(row);
         }
     }
 
-    // Existing constructor for initializing with a predefined list
-    public Matrix(List<List<Integer>> data) {
+    public Matrix(List<List<Double>> data) {
         this.data = data;
     }
 
-    public List<List<Integer>> getData() {
+    public List<List<Double>> getData() {
         return data;
     }
 
-    public void setData(List<List<Integer>> data) {
+    public void setData(List<List<Double>> data) {
         this.data = data;
     }
 
@@ -39,14 +37,14 @@ public class Matrix {
         if (!data.isEmpty()) {
             return data.get(0).size();
         }
-        return 0; // Return 0 if there are no rows
+        return 0;
     }
 
-    public Integer get(int row, int column) {
+    public Double get(int row, int column) {
         return data.get(row).get(column);
     }
 
-    public void set(int row, int column, Integer value) {
+    public void set(int row, int column, Double value) {
         data.get(row).set(column, value);
     }
 }
