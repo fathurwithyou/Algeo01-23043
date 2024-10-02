@@ -4,7 +4,7 @@ import src.datatypes.Matrix;
 
 public class ForwardElimination {
     public int forwardElimination(Integer n, Integer m, Matrix matrix) {
-        for (int col = 0; col < n - 1; col++) {
+        for (int col = 0; col < n; col++) {
             for (int row = col + 1; row < n; row++) {      
                 if (matrix.get(col, col) == 0) {
                     return col;
