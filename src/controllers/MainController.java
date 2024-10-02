@@ -1,6 +1,6 @@
-package controllers;
-import views.Menu;
-import controllers.*;
+package src.controllers;
+import src.views.Menu;
+import src.controllers.*;
 
 public class MainController {
     public void main() {
