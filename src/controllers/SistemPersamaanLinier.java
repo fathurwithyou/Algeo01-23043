@@ -2,25 +2,20 @@ package src.controllers;
 
 // view
 import src.views.sistemPersamaanLinier.SistemPersamaanLinierView;
-import src.views.sistemPersamaanLinier.MatriksBalikanView;
 
 // model
 import src.models.sistemPersamaanLinier.MatriksBalikan;
-import src.models.sistemPersamaanLinier.CheckConsistency;
 import src.models.sistemPersamaanLinier.GaussJordan;
 
 // data types
 import src.datatypes.Matrix;
 import src.datatypes.Tuple3;
-import src.helpers.AlignMatrix;
 
 public class SistemPersamaanLinier {
     private SistemPersamaanLinierView view;
-    private AlignMatrix alignMatrix;
 
     public SistemPersamaanLinier() {
         view = new SistemPersamaanLinierView();
-        alignMatrix = new AlignMatrix();
     }
 
     public void matriksBalikan() {
@@ -32,7 +27,6 @@ public class SistemPersamaanLinier {
     public Matrix gaussJordan() {
         GaussJordan gaussJordan = new GaussJordan();
         Tuple3<Integer, Integer, Matrix> input = view.getInput();
-        Matrix matrix = input.getItem3();
         Matrix result = gaussJordan.main(input);
         if (result.getRowCount() == 1 && result.getColumnCount() == 1) {
             view.showSingular(result.get(0, 0).intValue());
