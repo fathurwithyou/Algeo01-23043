@@ -3,15 +3,18 @@ package src.helpers;
 import src.datatypes.Matrix;
 
 public class ForwardElimination {
-    public void forwardElimination(Matrix matrix) {
-        int n = matrix.getRowCount();
+    public int forwardElimination(Integer n, Integer m, Matrix matrix) {
         for (int col = 0; col < n - 1; col++) {
-            for (int row = col + 1; row < n; row++) {
+            for (int row = col + 1; row < n; row++) {      
+                if (matrix.get(col, col) == 0) {
+                    return col;
+                }
                 double multiplier = matrix.get(row, col) / matrix.get(col, col);
-                for (int i = col; i < n; i++) {
+                for (int i = col; i < matrix.getColumnCount(); i++) {
                     matrix.set(row, i, matrix.get(row, i) - multiplier * matrix.get(col, i));
                 }
             }
         }
+        return -1;
     }
 }
