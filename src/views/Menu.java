@@ -1,4 +1,4 @@
-package views;
+package src.views;
 
 import java.util.*;
 
@@ -18,16 +18,21 @@ public class Menu {
 
     public int getChoice() {
         Scanner scanner = new Scanner(System.in);
+        String temp;
         int choice;
         do {
             showMenu();
-            choice = scanner.nextInt();
+            temp = scanner.nextLine();
+            try {
+                choice = Integer.parseInt(temp);
+            } catch (NumberFormatException e) {
+                choice = 0;
+            }
             if (choice < 1 || choice > 8) {
                 System.out.println("Pilihan tidak valid. Silakan coba lagi.");
             }
 
         } while (choice < 1 || choice > 8);
-        scanner.close();
         return choice;
     }
 }
