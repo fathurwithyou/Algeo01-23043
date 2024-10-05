@@ -40,6 +40,10 @@ public class Matrix {
         return 0;
     }
 
+    public Array getRow(int row) {
+        return new Array(data.get(row));
+    }
+
     public Double get(int row, int column) {
         return data.get(row).get(column);
     }
