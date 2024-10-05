@@ -14,11 +14,11 @@ public class CheckConsistency {
                 }
             }
 
-            if(isZero && matrix.get(i, m) != 0) {
+            if(isZero && matrix.get(i, m-1) != 0) {
                 flag = 1;
                 break;
             }
-            if(isZero && matrix.get(i, m) == 0) {
+            if(isZero && matrix.get(i, m-1) == 0) {
                 flag = 0;
             }
         }
