@@ -1,15 +1,20 @@
 package src.controllers;
 
+// helper
+import src.helpers.GetConst;
+
 // view
 import src.views.sistemPersamaanLinier.SistemPersamaanLinierView;
 
 // model
 import src.models.sistemPersamaanLinier.MatriksBalikan;
 import src.models.sistemPersamaanLinier.GaussJordan;
+import src.models.sistemPersamaanLinier.Gauss;
 
 // data types
 import src.datatypes.Matrix;
 import src.datatypes.Tuple3;
+import src.datatypes.Array;
 
 public class SistemPersamaanLinier {
     private SistemPersamaanLinierView view;
@@ -35,16 +40,27 @@ public class SistemPersamaanLinier {
         return result;
     }
 
+    // public Array gauss() {
+    //     Gauss gauss = new Gauss();
+    //     Tuple3<Integer, Integer, Matrix> input = view.getInput();
+    //     Array result = gauss.main(input);
+
+    // }
+
     public void main() {
         int choice = view.getChoice();
+        GetConst getConst = new GetConst();
         switch (choice) {
             case 1:
                 // Metode eliminasi Gauss
                 break;
             case 2:
                 Matrix result = gaussJordan();
-                if (result != null)
-                    view.printMatrix(result);
+                if (result != null) {
+                    Matrix sol = getConst.getConst(result);
+                    System.out.println();
+                    System.out.println("Solusi SPL");
+                    view.printMatrix((sol)); }
                 break;
             case 3:
                 matriksBalikan();
