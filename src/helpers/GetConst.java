@@ -1,13 +1,13 @@
 package src.helpers;
-import src.datatypes.Array;
+
 import src.datatypes.Matrix;
 
 public class GetConst {
-    public Array getConst(Matrix arr) {
+    public Matrix getConst(Matrix arr) {
         int n = arr.getRowCount();
-        Array result = new Array(n);
+        Matrix result = new Matrix(1, n);
         for (int i = 0; i < n; i++) {
-            result.set(i, arr.get(i, n));
+            result.set(0, i, arr.get(i, n));
         }
         return result;
     }
