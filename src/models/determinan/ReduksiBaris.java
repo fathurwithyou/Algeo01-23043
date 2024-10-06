@@ -20,17 +20,16 @@ public class ReduksiBaris {
         return determinant;
     }
 
-    public Tuple3<Integer, Matrix, Double> reduksiBarisElimination(Matrix matrix) {
+    public double reduksiBarisElimination(Matrix matrix) {
         int n = matrix.getRowCount();
         alignMatrix.alignMatrix(matrix); 
         forwardElimination.forwardElimination(n, n, matrix);
         normalizeMatrix.normalizeMatrix(n, n, matrix);
         double determinant = calculateDeterminant(matrix); 
-    
-        return new Tuple3<>(n, matrix, determinant);
+        return determinant;
     }
 
-    public Tuple3<Integer, Matrix, Double> main(Matrix matrix) {
+    public double main(Matrix matrix) {
         return reduksiBarisElimination(matrix);
     }
 }
