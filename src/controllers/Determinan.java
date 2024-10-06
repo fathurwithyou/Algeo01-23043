@@ -5,7 +5,8 @@ import src.views.determinan.DeterminanView;
 
 // Model
 import src.models.determinan.ReduksiBaris;
-import src.models.sistemPersamaanLinier.GaussJordan;
+import src.models.determinan.Matrix2x2;
+
 // Data types
 import src.datatypes.Matrix;
 import src.datatypes.Tuple3;
@@ -15,6 +16,22 @@ public class Determinan {
 
     public Determinan() {
         view = new DeterminanView();
+    }
+
+    public double matrix2x2() {
+        Tuple3<Integer, Integer, Matrix> input = view.getInput();
+        Matrix matrix = input.getItem3();
+    
+        // validasi input
+        if (matrix.getRowCount() != 2 || matrix.getColumnCount() != 2) {
+            System.out.println("Matriks harus berukuran 2x2.");
+            return Double.NaN; // kalau error return NaN, kalau mau while loop sampai hasil benar boleh
+        }
+
+        Matrix2x2 matrix2x2 = new Matrix2x2();
+        double result = matrix2x2.main(matrix);
+        view.showSingular(result);    
+        return result;
     }
 
     public double reduksiBaris() {
@@ -30,7 +47,7 @@ public class Determinan {
         int choice = view.getChoice();
         switch (choice) {
             case 1:
-                // determinan matriks 2 x 2
+                matrix2x2();
                 break;
             case 2:
                 reduksiBaris();
