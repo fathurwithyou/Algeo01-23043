@@ -1,7 +1,6 @@
 package src.models.determinan;
 
 import src.datatypes.Matrix;
-import src.datatypes.Tuple3;
 import src.helpers.AlignMatrix;
 import src.helpers.ForwardElimination;
 import src.helpers.NormalizeMatrix;
