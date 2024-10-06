@@ -2,13 +2,19 @@ package src.models.determinan;
 
 import src.datatypes.Matrix;
 import src.helpers.AlignMatrix;
-import src.helpers.ForwardElimination;
-import src.helpers.NormalizeMatrix;
+import src.helpers.BackwardElimination;
 
 public class ReduksiBaris {
     private AlignMatrix alignMatrix = new AlignMatrix();
-    private ForwardElimination forwardElimination = new ForwardElimination();
-    private NormalizeMatrix normalizeMatrix = new NormalizeMatrix();
+    private BackwardElimination backwardElimination = new BackwardElimination();
+    private Triangular triangular = new Triangular();
+
+    public Matrix reduksiBarisElimination(Matrix matrix) {
+        int n = matrix.getRowCount();
+        alignMatrix.alignMatrix(matrix); 
+        backwardElimination.backwardElimination(n, n, matrix);
+        return matrix;
+    }
 
     public double calculateDeterminant(Matrix matrix) {
         double determinant = 1.0;
@@ -19,16 +25,8 @@ public class ReduksiBaris {
         return determinant;
     }
 
-    public double reduksiBarisElimination(Matrix matrix) {
-        int n = matrix.getRowCount();
-        alignMatrix.alignMatrix(matrix); 
-        forwardElimination.forwardElimination(n, n, matrix);
-        normalizeMatrix.normalizeMatrix(n, n, matrix);
-        double determinant = calculateDeterminant(matrix); 
-        return determinant;
-    }
-
     public double main(Matrix matrix) {
-        return reduksiBarisElimination(matrix);
+        triangular.makeUpperTriangular(matrix);
+        return calculateDeterminant(matrix);
     }
 }
