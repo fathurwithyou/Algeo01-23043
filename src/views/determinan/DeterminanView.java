@@ -41,14 +41,6 @@ public class DeterminanView {
         return new Tuple3<>(n, n, coefMatrix);
     }
 
-    public void showSingular(double determinant) {
-        if (determinant == 0) {
-            System.out.println("Matriks ini adalah matriks singular.");
-        } else {
-            System.out.println("Matriks ini bukan matriks singular.");
-        }
-    }
-
     public void printDeterminant(double determinant) {
         System.out.println(determinant);
     }
