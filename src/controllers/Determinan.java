@@ -29,8 +29,7 @@ public class Determinan {
         }
 
         Matrix2x2 matrix2x2 = new Matrix2x2();
-        double result = matrix2x2.main(matrix);
-        view.showSingular(result);    
+        double result = matrix2x2.main(matrix);  
         return result;
     }
 
@@ -38,8 +37,7 @@ public class Determinan {
         Tuple3<Integer, Integer, Matrix> input = view.getInput();
         Matrix matrix = input.getItem3();
         ReduksiBaris reduksiBaris = new ReduksiBaris();
-        double result = reduksiBaris.main(matrix);
-        view.showSingular(result);    
+        double result = reduksiBaris.main(matrix);  
         return result;
     }
 
@@ -47,10 +45,12 @@ public class Determinan {
         int choice = view.getChoice();
         switch (choice) {
             case 1:
-                matrix2x2();
+                double matrix2x2_result = matrix2x2();
+                view.printDeterminant(matrix2x2_result);
                 break;
             case 2:
-                reduksiBaris();
+                double reduksibaris_result = reduksiBaris();
+                view.printDeterminant(reduksibaris_result);
                 break;
             case 3:
                 // ekspansi kofaktor
