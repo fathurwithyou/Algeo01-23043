@@ -8,7 +8,7 @@ import src.datatypes.Tuple3;
 public class DeterminanView {
     public void showMenu() {
         System.out.println("Determinan");
-        System.out.println("1. Determinan 2 x 2");
+        System.out.println("1. Determinan matriks 2 x 2");
         System.out.println("2. Metode reduksi baris");
         System.out.println("3. Metode ekspansi kofaktor");
         System.out.println("4. Keluar");
@@ -41,16 +41,16 @@ public class DeterminanView {
         return new Tuple3<>(n, n, coefMatrix);
     }
 
-    public void showSingular(double determinan) {
-        if (determinan == 0) {
+    public void showSingular(double determinant) {
+        if (determinant == 0) {
             System.out.println("Matriks ini adalah matriks singular.");
         } else {
             System.out.println("Matriks ini bukan matriks singular.");
         }
     }
 
-    public void printDeterminant(double determinan) {
-        System.out.println("Determinan matriks adalah: " + determinan);
+    public void printDeterminant(double determinant) {
+        System.out.println(determinant);
     }
 
 }
