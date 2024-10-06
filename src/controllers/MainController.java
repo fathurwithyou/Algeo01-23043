@@ -10,6 +10,10 @@ public class MainController {
                 SistemPersamaanLinier spl = new SistemPersamaanLinier();
                 spl.main();
                 break;
+            case 2:
+                Determinan det = new Determinan();
+                det.main();
+                break;
             default:
                 break;
         }
