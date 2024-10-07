@@ -7,8 +7,12 @@ import src.views.sistemPersamaanLinier.SistemPersamaanLinierView;
 import src.models.sistemPersamaanLinier.MatriksBalikan;
 import src.models.sistemPersamaanLinier.GaussJordan;
 
+// helpers
+import src.helpers.GetConst;
+import src.helpers.ReshapeConst;
 // data types
 import src.datatypes.Matrix;
+import src.datatypes.Array;
 import src.datatypes.Tuple3;
 
 public class SistemPersamaanLinier {
@@ -18,36 +22,56 @@ public class SistemPersamaanLinier {
         view = new SistemPersamaanLinierView();
     }
 
-    public void matriksBalikan() {
+    public Array matriksBalikan() {
         Tuple3<Integer, Integer, Matrix> input = view.getInput();
-        MatriksBalikan doMatriksBalikan = new MatriksBalikan();
-        doMatriksBalikan.main(input);
+        MatriksBalikan matriksBalikan = new MatriksBalikan();
+        if (input.getItem1() == input.getItem2()) {
+            Matrix result = matriksBalikan.main(input);
+            if (result.getRowCount() == 1 && result.getColumnCount() == 1) {
+                view.showSingular(result.get(0, 0).intValue());
+                return null;
+            }
+            return new ReshapeConst().reshapeConst(result, input.getItem1(), 1);
+        }
+        return null;
+
     }
 
-    public Matrix gaussJordan() {
+    public Array gaussJordan() {
         GaussJordan gaussJordan = new GaussJordan();
         Tuple3<Integer, Integer, Matrix> input = view.getInput();
-        Matrix result = gaussJordan.main(input);
-        if (result.getRowCount() == 1 && result.getColumnCount() == 1) {
-            view.showSingular(result.get(0, 0).intValue());
-            return null;
+
+        if (input.getItem1() == input.getItem2()) {
+            Matrix matrix = gaussJordan.main(input);
+            // view.printMatrix(matrix);
+            if (matrix.getRowCount() == 1 && matrix.getColumnCount() == 1) {
+                view.showSingular(matrix.get(0, 0).intValue());
+                return null;
+            }
+            Matrix result = new GetConst().getConst(matrix);
+            return result.getRow(0);
         }
-        return result;
+
+        view.showSingular(0);
+        return null;
     }
 
     public void main() {
         int choice = view.getChoice();
+        Array result = null;
         switch (choice) {
             case 1:
                 // Metode eliminasi Gauss
                 break;
             case 2:
-                Matrix result = gaussJordan();
+                result = gaussJordan();
                 if (result != null)
-                    view.printMatrix(result);
+                    view.printResult(result);
                 break;
             case 3:
-                matriksBalikan();
+                result = matriksBalikan();
+                if (result != null)
+                    view.printResult(result);
                 break;
             case 4:
                 // Kaidah Cramer
