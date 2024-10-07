@@ -6,7 +6,7 @@ import src.views.sistemPersamaanLinier.SistemPersamaanLinierView;
 // model
 import src.models.sistemPersamaanLinier.MatriksBalikan;
 import src.models.sistemPersamaanLinier.GaussJordan;
-
+import src.models.sistemPersamaanLinier.KaidahCramer;
 // data types
 import src.datatypes.Matrix;
 import src.datatypes.Tuple3;
@@ -35,6 +35,22 @@ public class SistemPersamaanLinier {
         return result;
     }
 
+    public void kaidahCramer() {
+        Matrix augmentedMatrix = view.getSquareInput().getItem3();
+        KaidahCramer kaidahCramer = new KaidahCramer();
+        Matrix result = kaidahCramer.main(augmentedMatrix);    
+        
+        if (result != null) {
+            if (result.getRowCount() == 1 && result.getColumnCount() == 1) {
+                int singularValue = result.get(0, 0).intValue();
+                view.showSingular(singularValue);
+            } else {
+                view.printMatrix(result);
+            }
+        } else {
+            view.showSingular(0);
+        }
+    }
     public void main() {
         int choice = view.getChoice();
         switch (choice) {
@@ -50,7 +66,7 @@ public class SistemPersamaanLinier {
                 matriksBalikan();
                 break;
             case 4:
-                // Kaidah Cramer
+                kaidahCramer();
                 break;
             default:
                 break;
