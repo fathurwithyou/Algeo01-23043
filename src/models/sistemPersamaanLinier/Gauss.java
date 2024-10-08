@@ -13,8 +13,6 @@ public class Gauss {
     private CheckConsistency checkConsistency = new CheckConsistency();
     private NormalizeMatrix normalizeMatrix = new NormalizeMatrix();
 
-    // //temp
-    // private SistemPersamaanLinierView view = new SistemPersamaanLinierView();
 
     public Matrix gaussElimination(Integer m, Integer n, Matrix matrix) {
         
@@ -22,15 +20,7 @@ public class Gauss {
         ForwardElimination forwardElimination = new ForwardElimination();
         alignMatrix.alignMatrix(matrix);
 
-        // System.out.println("Aligned Matrix:");
-        // view.printMatrix(matrix); //temp
-        // System.out.println();
-
         forwardElimination.forwardElimination(m, n, matrix);
-
-        // System.out.println("Eliminated Matrix:");
-        // view.printMatrix(matrix); //temp
-        // System.out.println();
         
         int flag = checkConsistency.checkConsistency(m, n, matrix);
         if (flag != -1) {
@@ -40,10 +30,6 @@ public class Gauss {
         }
 
         normalizeMatrix.normalizeMatrix(m, n, matrix);
-
-        // System.out.println("Normalized Matrix");
-        // view.printMatrix(matrix); //temp
-        // System.out.println();
 
         return matrix;
     }
