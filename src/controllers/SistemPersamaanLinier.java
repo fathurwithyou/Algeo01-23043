@@ -49,7 +49,7 @@ public class SistemPersamaanLinier {
                 return null;
             }
             Matrix result = new GetConst().getConst(matrix);
-            return result.getRow(0);
+            return result.flatten();
         }
 
         view.showSingular(0);

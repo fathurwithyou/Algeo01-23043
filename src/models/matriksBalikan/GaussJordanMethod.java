@@ -22,7 +22,6 @@ public class GaussJordanMethod {
 
     public Matrix inverseMatrix(Integer n, Integer m, Matrix matrix) {
         matrix = gaussJordan.gaussJordanElimination(n, m, matrix);
-        view.printMatrix(matrix);
         if (matrix.getRowCount() == 1 && matrix.getColumnCount() == 1){
             return matrix;
         }
