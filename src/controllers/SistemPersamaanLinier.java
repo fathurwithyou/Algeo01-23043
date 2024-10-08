@@ -9,7 +9,7 @@ import src.models.sistemPersamaanLinier.GaussJordan;
 
 // helpers
 import src.helpers.GetConst;
-import src.helpers.ReshapeConst;
+// import src.helpers.ReshapeConst;
 // data types
 import src.datatypes.Matrix;
 import src.datatypes.Array;
@@ -31,7 +31,7 @@ public class SistemPersamaanLinier {
                 view.showSingular(result.get(0, 0).intValue());
                 return null;
             }
-            return new ReshapeConst().reshapeConst(result, input.getItem1(), 1);
+            return result.flatten();
         }
         return null;
 
