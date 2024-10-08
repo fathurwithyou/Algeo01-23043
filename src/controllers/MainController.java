@@ -10,6 +10,14 @@ public class MainController {
                 SistemPersamaanLinier spl = new SistemPersamaanLinier();
                 spl.main();
                 break;
+            case 2:
+                Determinan det = new Determinan();
+                det.main();
+                break;
+            case 3:
+                MatriksBalikanController mbc = new MatriksBalikanController();
+                mbc.main();
+                break;
             default:
                 break;
         }

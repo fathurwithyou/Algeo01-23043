@@ -2,6 +2,7 @@ package src.controllers;
 
 import src.datatypes.Array;
 import src.datatypes.Matrix;
+import src.datatypes.Array;
 import src.datatypes.Tuple3;
 import src.helpers.GetConst;
 import src.models.sistemPersamaanLinier.Gauss;
@@ -16,10 +17,19 @@ public class SistemPersamaanLinier {
         view = new SistemPersamaanLinierView();
     }
 
-    public void matriksBalikan() {
+    public Array matriksBalikan() {
         Tuple3<Integer, Integer, Matrix> input = view.getInput();
-        MatriksBalikan doMatriksBalikan = new MatriksBalikan();
-        doMatriksBalikan.main(input);
+        MatriksBalikan matriksBalikan = new MatriksBalikan();
+        if (input.getItem1() == input.getItem2()) {
+            Matrix result = matriksBalikan.main(input);
+            if (result.getRowCount() == 1 && result.getColumnCount() == 1) {
+                view.showSingular(result.get(0, 0).intValue());
+                return null;
+            }
+            return new ReshapeConst().reshapeConst(result, input.getItem1(), 1);
+        }
+        return null;
+
     }
 
     public Array gaussJordan() {
@@ -41,7 +51,9 @@ public class SistemPersamaanLinier {
             view.showSingular(result.get(0).intValue());
             return null;
         }
-        return result;
+
+        view.showSingular(0);
+        return null;
     }
 
     public void main() {
@@ -63,7 +75,9 @@ public class SistemPersamaanLinier {
                     view.printArray((resultGaussJordan)); }
                 break;
             case 3:
-                matriksBalikan();
+                result = matriksBalikan();
+                if (result != null)
+                    view.printResult(result);
                 break;
             case 4:
                 // Kaidah Cramer

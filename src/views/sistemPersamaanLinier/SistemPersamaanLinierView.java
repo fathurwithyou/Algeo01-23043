@@ -82,4 +82,17 @@ public class SistemPersamaanLinierView {
             System.out.println();
         }
     }
+    
+    public void printResult(Array result) {
+        int n = result.getSize();
+        System.out.print("[");
+        for (int i = 0; i < n; i++) {
+            System.out.print(result.get(i));
+            if (i != n - 1) {
+                System.out.print(", ");
+            }
+        }
+        System.out.println("]");
+    }
+
 }
