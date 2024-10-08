@@ -5,9 +5,10 @@ import src.datatypes.Matrix;
 public class AlignMatrix {
     public int alignMatrix(Matrix matrix) {
         int n = matrix.getRowCount();
-        for (int col = 0; col < n; col++) {
+        int m = matrix.getColumnCount();
+        for (int col = 0; col < Math.min(n,m); col++) {
             int iMax = col;
-            Double vMax = matrix.get(iMax, col);
+            double vMax = matrix.get(iMax, col);
             for (int row = col+1; row < n; row++) {
                 if(Math.abs(matrix.get(row, col)) > vMax) {
                     iMax = row;

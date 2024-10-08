@@ -3,6 +3,8 @@ package src.views;
 import java.util.*;
 
 public class Menu {
+
+    /** Menampilkan Menu **/
     public void showMenu() {
         System.out.println("MENU");
         System.out.println("1. Sistem Persamaan Linier");
@@ -16,6 +18,7 @@ public class Menu {
         System.out.print("Pilih menu: ");
     }
 
+    /** Menerima Input Pilihan Menu **/
     public int getChoice() {
         Scanner scanner = new Scanner(System.in);
         String temp;
@@ -23,6 +26,7 @@ public class Menu {
         do {
             showMenu();
             temp = scanner.nextLine();
+            System.out.println();
             try {
                 choice = Integer.parseInt(temp);
             } catch (NumberFormatException e) {
@@ -31,7 +35,6 @@ public class Menu {
             if (choice < 1 || choice > 8) {
                 System.out.println("Pilihan tidak valid. Silakan coba lagi.");
             }
-
         } while (choice < 1 || choice > 8);
         return choice;
     }

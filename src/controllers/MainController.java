@@ -14,6 +14,10 @@ public class MainController {
                 Determinan det = new Determinan();
                 det.main();
                 break;
+            case 3:
+                MatriksBalikanController mbc = new MatriksBalikanController();
+                mbc.main();
+                break;
             default:
                 break;
         }
