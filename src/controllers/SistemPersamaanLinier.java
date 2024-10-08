@@ -2,9 +2,8 @@ package src.controllers;
 
 import src.datatypes.Array;
 import src.datatypes.Matrix;
-import src.datatypes.Array;
 import src.datatypes.Tuple3;
-import src.helpers.GetConst;
+import src.helpers.ReshapeConst;
 import src.models.sistemPersamaanLinier.Gauss;
 import src.models.sistemPersamaanLinier.GaussJordan;
 import src.models.sistemPersamaanLinier.MatriksBalikan;
@@ -51,14 +50,11 @@ public class SistemPersamaanLinier {
             view.showSingular(result.get(0).intValue());
             return null;
         }
-
-        view.showSingular(0);
-        return null;
+        return result;
     }
 
     public void main() {
         int choice = view.getChoice();
-        GetConst getConst = new GetConst();
         switch (choice) {
             case 1:
                 Array resultGauss = gauss();
@@ -75,7 +71,7 @@ public class SistemPersamaanLinier {
                     view.printArray((resultGaussJordan)); }
                 break;
             case 3:
-                result = matriksBalikan();
+                Array result = matriksBalikan();
                 if (result != null)
                     view.printResult(result);
                 break;
