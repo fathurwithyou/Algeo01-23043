@@ -1,0 +1,37 @@
+[33mf983433[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m HEAD@{0}: commit: grand init to continue
+[33mcfb728c[m HEAD@{1}: reset: moving to cfb728ca
+[33mcfb728c[m HEAD@{2}: reset: moving to cfb728ca
+[33m57ad4df[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{3}: reset: moving to HEAD
+[33m57ad4df[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{4}: reset: moving to HEAD
+[33m57ad4df[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{5}: reset: moving to HEAD
+[33m57ad4df[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{6}: pull: Fast-forward
+[33mcfb728c[m HEAD@{7}: commit: feat: views for matriks balikan
+[33mf28acd7[m HEAD@{8}: commit: fix: bug fixing
+[33mc342387[m HEAD@{9}: commit: see the changes for every controller
+[33m11a64b1[m HEAD@{10}: commit: feat: adjoin method for finding the matriks balikan
+[33m14c20db[m HEAD@{11}: commit: feat: gauss jordan method for finding the matriks balikan
+[33mc1508d8[m HEAD@{12}: commit: feat: Find determinant using Cofactor Expansion
+[33m312aad0[m HEAD@{13}: pull: Fast-forward
+[33m7e88016[m HEAD@{14}: commit: change Matrix
+[33mdeacb76[m HEAD@{15}: commit: initial commit for MatriksBalikan
+[33m11da634[m HEAD@{16}: commit: add feat for several methods
+[33m120f922[m HEAD@{17}: commit: change output dtype from Array to Matrix
+[33m250885a[m HEAD@{18}: commit: feat: Matrix multiplication
+[33m83f00dc[m HEAD@{19}: commit: init
+[33m1cd015b[m HEAD@{20}: commit: fix
+[33mca90e2b[m HEAD@{21}: commit: add the effortless way to run
+[33ma23065a[m HEAD@{22}: commit: add 'how to run the program'
+[33m4a003a0[m HEAD@{23}: commit: fix
+[33m40e18be[m HEAD@{24}: commit: add several methods
+[33m3143b8f[m HEAD@{25}: commit: feat: feature for check 3 possibilities of solution
+[33mfb74451[m HEAD@{26}: commit: refactor
+[33m95f1996[m HEAD@{27}: commit: fix: change datatypes
+[33mbd57c3b[m HEAD@{28}: commit: bug fixing
+[33md8ff349[m HEAD@{29}: commit: feat: added GaussJordanElimination
+[33mb7cef90[m HEAD@{30}: commit: bug fixing
+[33m09c5695[m HEAD@{31}: commit: feat: add helpers for doing matrix manipulation
+[33m108a74f[m HEAD@{32}: commit: structuring and change dtypes
+[33mc198e7d[m HEAD@{33}: commit: dtypes: Tuple3
+[33ma7c42b7[m HEAD@{34}: commit: add ADT
+[33mb11ce39[m HEAD@{35}: commit: init commit
+[33mdcab740[m HEAD@{36}: clone: from https://github.com/fathurwithyou/Algeo01-23043.git
