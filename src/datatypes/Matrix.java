@@ -3,6 +3,8 @@ package src.datatypes;
 import java.util.ArrayList;
 import java.util.List;
 
+import src.models.matriksBalikan.AdjoinMethod;
+
 public class Matrix {
     private List<List<Double>> data;
 
@@ -54,17 +56,15 @@ public class Matrix {
         int rows = this.getRowCount();
         int cols = this.getColumnCount();
 
-        // Create an Array ADT to hold the flattened data
         Array flatten = new Array(rows * cols);
 
-        // Flatten the matrix
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                flatten.set(i * cols + j, this.get(i, j)); // Set each element in the flattened array
+                flatten.set(i * cols + j, this.get(i, j)); 
             }
         }
 
-        return flatten; // Return the flattened Array ADT
+        return flatten; 
     }
 
     public Double get(int row, int column) {
@@ -80,11 +80,11 @@ public class Matrix {
         int minorRow = 0;
         for (int i = 0; i < getRowCount(); i++) {
             if (i == rowToRemove)
-                continue; // Skip the row
+                continue; 
             int minorCol = 0;
             for (int j = 0; j < getColumnCount(); j++) {
                 if (j == colToRemove)
-                    continue; // Skip the column
+                    continue; 
                 minorMatrix.set(minorRow, minorCol, this.get(i, j));
                 minorCol++;
             }
@@ -104,77 +104,23 @@ public class Matrix {
     }
 
     public Matrix inverse() {
-        int n = getRowCount();
-        if (n != getColumnCount()) {
-            throw new IllegalArgumentException("Matrix must be square.");
-        }
-
-        Matrix augmentedMatrix = augmentWithIdentity();
-        augmentedMatrix.gaussianElimination();
-
-        Matrix inverseMatrix = new Matrix(n, n);
-        for (int i = 0; i < n; i++) {
-            for (int j = n; j < 2 * n; j++) {
-                inverseMatrix.set(i, j - n, augmentedMatrix.get(i, j));
-            }
-        }
-        return inverseMatrix;
+        return new AdjoinMethod().main(this);
     }
 
-    private Matrix augmentWithIdentity() {
-        int n = getRowCount();
-        Matrix augmentedMatrix = new Matrix(n, 2 * n); // Augmented matrix will have 2 * n columns
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                augmentedMatrix.set(i, j, this.get(i, j)); // Copy original matrix
-                augmentedMatrix.set(i, j + n, i == j ? 1.0 : 0.0); // Add identity matrix
-            }
-        }
-        return augmentedMatrix;
-    }
+    public Matrix multiply(Matrix other) {
+        int rows = this.getRowCount();
+        int cols = other.getColumnCount();
+        Matrix result = new Matrix(rows, cols);
 
-    // Perform Gaussian elimination
-    private void gaussianElimination() {
-        int n = getRowCount();
-        for (int i = 0; i < n; i++) {
-            double pivot = data.get(i).get(i);
-            if (pivot == 0) {
-                throw new ArithmeticException("Matrix is singular.");
-            }
-            // Normalize pivot row
-            for (int j = 0; j < 2 * n; j++) {
-                data.get(i).set(j, data.get(i).get(j) / pivot);
-            }
-
-            // Eliminate other rows
-            for (int k = 0; k < n; k++) {
-                if (k != i) {
-                    double factor = data.get(k).get(i);
-                    for (int j = 0; j < 2 * n; j++) {
-                        data.get(k).set(j, data.get(k).get(j) - factor * data.get(i).get(j));
-                    }
-                }
-            }
-        }
-    }
-
-    // Multiply this matrix by another matrix
-    public Matrix multiply(Matrix otherMatrix) {
-        if (this.getColumnCount() != otherMatrix.getRowCount()) {
-            throw new IllegalArgumentException("Row and Column not match");
-        }
-
-        Matrix resultMatrix = new Matrix(this.getRowCount(), otherMatrix.getColumnCount());
-
-        for (int i = 0; i < this.getRowCount(); i++) {
-            for (int j = 0; j < otherMatrix.getColumnCount(); j++) {
-                double sum = 0.0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                double sum = 0;
                 for (int k = 0; k < this.getColumnCount(); k++) {
-                    sum += this.get(i, k) * otherMatrix.get(k, j);
+                    sum += this.get(i, k) * other.get(k, j);
                 }
-                resultMatrix.set(i, j, sum);
+                result.set(i, j, sum);
             }
         }
-        return resultMatrix;
+        return result;
     }
 }

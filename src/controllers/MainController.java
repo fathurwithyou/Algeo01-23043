@@ -18,6 +18,10 @@ public class MainController {
                 MatriksBalikanController mbc = new MatriksBalikanController();
                 mbc.main();
                 break;
+            case 6:
+                LinearRegressionController lrc = new LinearRegressionController();
+                lrc.main();
+                break;
             default:
                 break;
         }
