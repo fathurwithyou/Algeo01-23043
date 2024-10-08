@@ -4,13 +4,10 @@ import src.datatypes.Matrix;
 
 import src.helpers.AddIdentity;
 import src.models.sistemPersamaanLinier.GaussJordan;
-import src.views.matriksBalikan.MatriksBalikanView;
 
 public class GaussJordanMethod {
     private GaussJordan gaussJordan = new GaussJordan();
-    private MatriksBalikanView view = new MatriksBalikanView();
     public Matrix extractMatrix(Integer n, Matrix matrix) {
-        // extract start from n to n*2 and m to m*2
         Matrix result = new Matrix(n, n);
         for (int i = 0; i < n; i++) {
             for (int j = n; j < n * 2; j++) {

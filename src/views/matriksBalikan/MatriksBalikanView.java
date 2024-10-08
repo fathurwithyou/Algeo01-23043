@@ -46,5 +46,9 @@ public class MatriksBalikanView {
             System.out.println();
         }
     }
+
+    public void showSingular() {
+        System.out.println("Matriks singular");
+    }
     
 }

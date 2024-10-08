@@ -25,7 +25,7 @@ public class MatriksBalikanController {
         Tuple3<Integer, Integer, Matrix> input = view.getInput();
         Matrix matrix = input.getItem3();
         if (isSingular(matrix)) {
-            System.out.println("Tidak mempunyai matriks balikan.");
+            view.showSingular();
             return null;
         }
         Matrix result = gaussJordanMethod.main(matrix);
