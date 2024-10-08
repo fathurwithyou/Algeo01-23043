@@ -1,10 +1,9 @@
 package src.views.sistemPersamaanLinier;
 
 import java.util.*;
-
+import src.datatypes.Array;
 import src.datatypes.Matrix;
 import src.datatypes.Tuple3;
-import src.datatypes.Array;
 
 public class SistemPersamaanLinierView {
 

@@ -17,17 +17,18 @@ public class CheckConsistency {
                 }
             }
 
+            //case matriks persegi panjang dengan banyak peubah > banyak persamaan
+            if ((n < m-1)) {
+                flag = 0; //memiliki banyak solusi
+                break;
+            }
+
             if(isZero && matrix.get(i, Math.min(n,m-1)) != 0) {
                 flag = 1; //tidak memiliki solusi
                 break;
             }
 
             if(isZero && matrix.get(i, Math.min(n,m-1)) == 0) {
-                flag = 0; //memiliki banyak solusi
-            }
-
-            //case matriks persegi panjang dengan banyak peubah > banyak persamaan
-            if ((n < m-1)) {
                 flag = 0; //memiliki banyak solusi
             }
         }
