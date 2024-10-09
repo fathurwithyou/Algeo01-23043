@@ -33,7 +33,6 @@ public class SistemPersamaanLinier {
             return result.flatten();
         }
         return null;
-
     }
 
     public Array gaussJordan() {

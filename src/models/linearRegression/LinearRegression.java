@@ -1,7 +1,7 @@
 package src.models.linearRegression;
 
 import src.datatypes.Matrix;
-import src.views.linearRegression.LinearRegressionView;
+import src.views.regression.linearRegression.LinearRegressionView;
 
 public class LinearRegression {
     private Matrix beta;
@@ -11,6 +11,10 @@ public class LinearRegression {
 
     public LinearRegression() {
         this("OLS", 0.0);
+    }
+
+    public LinearRegression(String method) {
+        this(method, 0.0);
     }
 
     public LinearRegression(String method, double alpha) {
@@ -38,8 +42,8 @@ public class LinearRegression {
     }
 
     private void fitRidge(Matrix X, Matrix y) {
-        int n = X.getRowCount();
-        Matrix I = Matrix.identity(n);
+        int n = X.getColumnCount(); // Change to getColumnCount for regularization
+        Matrix I = Matrix.identity(n); // Use number of features for identity matrix
         Matrix X_transpose = X.transpose();
         Matrix X_transpose_X = X_transpose.multiply(X);
         Matrix regularizationTerm = I.multiplyConst(alpha);

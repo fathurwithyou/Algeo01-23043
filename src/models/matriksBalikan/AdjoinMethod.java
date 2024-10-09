@@ -2,9 +2,12 @@ package src.models.matriksBalikan;
 
 import src.datatypes.Matrix;
 import src.models.determinan.EkspansiKofaktor;
+import src.views.matriksBalikan.MatriksBalikanView;
 
 public class AdjoinMethod {
+    private MatriksBalikanView view = new MatriksBalikanView();
     public Matrix adjoinMethod(Matrix matrix){
+        view.printMatrix(matrix);
         double determinant = 0;
         determinant = new EkspansiKofaktor().main(matrix);
         if (determinant == 0) {

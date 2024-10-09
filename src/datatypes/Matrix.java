@@ -13,7 +13,7 @@ public class Matrix {
         for (int i = 0; i < rows; i++) {
             List<Double> row = new ArrayList<>();
             for (int j = 0; j < cols; j++) {
-                row.add(Double.NaN);
+                row.add(0.0);
             }
             data.add(row);
         }
@@ -119,6 +119,46 @@ public class Matrix {
                     sum += this.get(i, k) * other.get(k, j);
                 }
                 result.set(i, j, sum);
+            }
+        }
+        return result;
+    }
+
+    public static Matrix identity(int n) {
+        Matrix identityMatrix = new Matrix(n, n);
+        for (int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                if (i == j) {
+                    identityMatrix.set(i, j, 1.0);
+                } else {
+                    identityMatrix.set(i, j, 0.0);
+                }
+            }
+        }
+        return identityMatrix;
+    }
+
+    public Matrix add(Matrix other) {
+        int rows = this.getRowCount();
+        int cols = this.getColumnCount();
+        Matrix result = new Matrix(rows, cols);
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result.set(i, j, this.get(i, j) + other.get(i, j));
+            }
+        }
+        return result;
+    }
+
+    public Matrix multiplyConst(double constant) {
+        int rows = this.getRowCount();
+        int cols = this.getColumnCount();
+        Matrix result = new Matrix(rows, cols);
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result.set(i, j, this.get(i, j) * constant);
             }
         }
         return result;

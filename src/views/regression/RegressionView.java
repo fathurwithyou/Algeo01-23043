@@ -1,15 +1,27 @@
-package src.views.linearRegression;
+package src.views.regression;
+
+import src.datatypes.Matrix;
+import src.datatypes.Tuple4;
 
 import java.util.Scanner;
 
-import src.datatypes.Matrix;
-import src.datatypes.Tuple4;   
-
-public class LinearRegressionView {
+public class RegressionView {
     public void showMenu() {
-        System.out.println("Regresi Linear Berganda");
-        System.out.println("1. Metode OLS");
-        System.out.println("2. Keluar");
+        System.out.println("Regresi");
+        System.out.println("1. Regresi Linear Berganda");
+        System.out.println("2. Regresi Kuadratik");
+        System.out.println("3. Keluar");
+    }
+
+    public int getChoice() {
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+        do {
+            showMenu();
+            System.out.print("Pilihan: ");
+            choice = scanner.nextInt();
+        } while (choice < 1 || choice > 3);
+        return choice;
     }
 
     public Tuple4<Integer, Integer, Matrix, Matrix> getInput() {
@@ -31,17 +43,6 @@ public class LinearRegressionView {
         }
         return new Tuple4<>(n, m, X, Y);
     }
-
-    public int getChoice() {
-        Scanner scanner = new Scanner(System.in);
-        int choice;
-        do {
-            showMenu();
-            System.out.print("Pilihan: ");
-            choice = scanner.nextInt();
-        } while (choice < 1 || choice > 3);
-        return choice;
-    } 
 
     public void printMatrix(Matrix matrix) {
         for (int i = 0; i < matrix.getRowCount(); i++) {
