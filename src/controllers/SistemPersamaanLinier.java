@@ -9,7 +9,6 @@ import src.models.sistemPersamaanLinier.GaussJordan;
 
 // helpers
 import src.helpers.GetConst;
-// import src.helpers.ReshapeConst;
 // data types
 import src.datatypes.Matrix;
 import src.datatypes.Array;
@@ -43,7 +42,6 @@ public class SistemPersamaanLinier {
 
         if (input.getItem1() == input.getItem2()) {
             Matrix matrix = gaussJordan.main(input);
-            // view.printMatrix(matrix);
             if (matrix.getRowCount() == 1 && matrix.getColumnCount() == 1) {
                 view.showSingular(matrix.get(0, 0).intValue());
                 return null;
