@@ -10,10 +10,12 @@ import src.helpers.GetConst;
 import src.models.sistemPersamaanLinier.Gauss;
 import src.models.sistemPersamaanLinier.GaussJordan;
 import src.models.sistemPersamaanLinier.MatriksBalikan;
+import src.models.sistemPersamaanLinier.KaidahCramer;
 import src.views.sistemPersamaanLinier.SistemPersamaanLinierView;
 
 public class SistemPersamaanLinier {
     private SistemPersamaanLinierView view;
+    
 
     public SistemPersamaanLinier() {
         view = new SistemPersamaanLinierView();
@@ -62,7 +64,7 @@ public class SistemPersamaanLinier {
         return result;
     }
 
-    public Matrix kaidahCramer() {
+    public Array kaidahCramer() {
         Matrix augmentedMatrix = view.getSquareInput().getItem3();
         KaidahCramer kaidahCramer = new KaidahCramer();
         Matrix result = kaidahCramer.main(augmentedMatrix);    
@@ -72,7 +74,7 @@ public class SistemPersamaanLinier {
                 view.showSingular(result.get(0, 0).intValue());
                 return null;
             } else {
-                return result;
+                return result.flatten();
             }
         } else {
             view.showSingular(result.get(0, 0).intValue());
@@ -99,9 +101,9 @@ public class SistemPersamaanLinier {
                     view.printResult(result);
                 break;
             case 4:
-                Matrix cramer_result = kaidahCramer();
+                Array cramer_result = kaidahCramer();
                 if (cramer_result != null) {
-                    view.printMatrix(cramer_result);
+                    view.printResult(cramer_result);
                 }
                 break;
             default:

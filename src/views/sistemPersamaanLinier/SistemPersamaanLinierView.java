@@ -2,6 +2,7 @@ package src.views.sistemPersamaanLinier;
 
 import java.util.*;
 
+import src.datatypes.Array;
 import src.datatypes.Matrix;
 import src.datatypes.Tuple3;
 
@@ -36,10 +37,11 @@ public class SistemPersamaanLinierView {
         Matrix coefMatrix = new Matrix(n, m + 1);
         System.out.println("Masukkan matriks augmented:");
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
+            for (int j = 0; j < m+1; j++) {
                 Double value = scanner.nextDouble();
                 coefMatrix.set(i, j, value);
             }
+
         }
         return new Tuple3<>(n, m, coefMatrix);
     }
@@ -68,6 +70,13 @@ public class SistemPersamaanLinierView {
             else{
                 System.out.println("Sistem persamaan linier tidak memiliki solusi");
             }
+        }
+    }
+
+    public void printResult(Array result) {
+        System.out.println("Hasil:");
+        for (int i = 0; i < result.getSize(); i++) {
+            System.out.println("x" + (i + 1) + " = " + result.get(i));
         }
     }
 

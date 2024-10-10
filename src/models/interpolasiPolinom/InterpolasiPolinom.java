@@ -9,7 +9,7 @@ public class InterpolasiPolinom {
     private Gauss gauss = new Gauss();
     private Array pers;
 
-    public Tuple3 persamaanLanjar(Integer n, Integer m, Matrix X, Matrix Y) {
+    public Tuple3<Integer, Integer, Matrix> persamaanLanjar(Integer n, Integer m, Matrix X, Matrix Y) {
 
         Matrix aug = new Matrix(n-1, n);
         for (int i = 0; i < n-1; i++) {
@@ -26,7 +26,7 @@ public class InterpolasiPolinom {
     }
 
     public Array interpolasiPolinom(Integer n, Integer m, Matrix X, Matrix Y) {
-        Tuple3 aug = persamaanLanjar(n, m, X, Y);
+        Tuple3<Integer, Integer, Matrix> aug = persamaanLanjar(n, m, X, Y);
         pers = gauss.main(aug);
         return pers; //coef of linear equation (a0, a1x, a2x^2 dst)
     }

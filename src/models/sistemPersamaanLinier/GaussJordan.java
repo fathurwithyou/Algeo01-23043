@@ -11,24 +11,23 @@ public class GaussJordan {
     private CheckConsistency checkConsistency = new CheckConsistency();
     private NormalizeMatrix normalizeMatrix = new NormalizeMatrix();
 
-
     public Matrix gaussJordanElimination(Integer n, Integer m, Matrix matrix) {
         AlignMatrix alignMatrix = new AlignMatrix();
         ForwardElimination forwardElimination = new ForwardElimination();
         BackwardElimination backwardElimination = new BackwardElimination();
         alignMatrix.alignMatrix(matrix);
         int flag = checkConsistency.checkConsistency(n, m, matrix);
-        if(flag != -1) {
+        if (flag != -1) {
             Matrix singular = new Matrix(1, 1);
-            singular.set(0, 0, (double)flag);
+            singular.set(0, 0, (double) flag);
             return singular;
         }
 
         forwardElimination.forwardElimination(n, m, matrix);
         flag = checkConsistency.checkConsistency(n, m, matrix);
-        if(flag != -1) {
+        if (flag != -1) {
             Matrix singular = new Matrix(1, 1);
-            singular.set(0, 0, (double)flag);
+            singular.set(0, 0, (double) flag);
             return singular;
         }
 
