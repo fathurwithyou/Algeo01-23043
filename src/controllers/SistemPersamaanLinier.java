@@ -1,18 +1,14 @@
 package src.controllers;
 
 // view
-import src.views.sistemPersamaanLinier.SistemPersamaanLinierView;
-
-// model
-import src.models.sistemPersamaanLinier.MatriksBalikan;
-import src.models.sistemPersamaanLinier.GaussJordan;
-
-// helpers
-import src.helpers.GetConst;
-// data types
-import src.datatypes.Matrix;
 import src.datatypes.Array;
+import src.datatypes.Matrix;
 import src.datatypes.Tuple3;
+import src.helpers.GetConst;
+import src.models.sistemPersamaanLinier.Gauss;
+import src.models.sistemPersamaanLinier.GaussJordan;
+import src.models.sistemPersamaanLinier.MatriksBalikan;
+import src.views.sistemPersamaanLinier.SistemPersamaanLinierView;
 
 public class SistemPersamaanLinier {
     private SistemPersamaanLinierView view;
@@ -53,12 +49,25 @@ public class SistemPersamaanLinier {
         return null;
     }
 
+    public Array gauss() {
+        Gauss gauss = new Gauss();
+        Tuple3<Integer, Integer, Matrix> input = view.getInput();
+        Array result = gauss.main(input);
+        if (result.getSize() == 1) {
+            view.showSingular(result.get(0).intValue());
+            return null;
+        }
+        return result;
+    }
+
     public void main() {
         int choice = view.getChoice();
         Array result = null;
         switch (choice) {
             case 1:
-                // Metode eliminasi Gauss
+                result = gauss();
+                if (result != null) {
+                    view.printResult(result); }
                 break;
             case 2:
                 result = gaussJordan();

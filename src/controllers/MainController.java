@@ -19,6 +19,8 @@ public class MainController {
                 mbc.main();
                 break;
             case 4:
+                InterpolasiPolinomController ipc = new InterpolasiPolinomController();
+                ipc.main();
                 break;
             case 6:
                 RegressionController rc = new RegressionController();
