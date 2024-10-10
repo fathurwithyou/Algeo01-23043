@@ -2,7 +2,6 @@ package src.models.sistemPersamaanLinier;
 
 import src.datatypes.*;
 import src.helpers.GetConst;
-import src.helpers.MultiplyMatrix;
 import src.helpers.AddIdentity;
 
 public class MatriksBalikan {
@@ -34,7 +33,7 @@ public class MatriksBalikan {
         Matrix b = new GetConst().getConst(matrix);
         matrix = new AddIdentity().addIdentity(matrix);
         Matrix invertedMatrix = inverseMatrix(n, m, matrix);
-        Matrix result = new MultiplyMatrix().multiplyMatrix(invertedMatrix, b);
+        Matrix result = invertedMatrix.multiply(b);
         return result;
     }
 }

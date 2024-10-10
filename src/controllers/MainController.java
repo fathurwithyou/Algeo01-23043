@@ -14,6 +14,18 @@ public class MainController {
                 Determinan det = new Determinan();
                 det.main();
                 break;
+            case 3:
+                MatriksBalikanController mbc = new MatriksBalikanController();
+                mbc.main();
+                break;
+            case 4:
+                InterpolasiPolinomController ipc = new InterpolasiPolinomController();
+                ipc.main();
+                break;
+            case 6:
+                RegressionController rc = new RegressionController();
+                rc.main();
+                break;
             default:
                 break;
         }

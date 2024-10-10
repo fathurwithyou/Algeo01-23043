@@ -9,8 +9,8 @@ public class AddIdentity {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 result.set(i, j, matrix.get(i, j));
+                result.set(i, j + n, (i == j) ? 1.0 : 0.0);
             }
-            result.set(i, i+n, 1.0);
         }
         return result;
     }
