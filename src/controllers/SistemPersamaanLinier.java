@@ -1,6 +1,8 @@
 package src.controllers;
 
 // view
+
+// data types
 import src.datatypes.Array;
 import src.datatypes.Matrix;
 import src.datatypes.Tuple3;
@@ -60,6 +62,23 @@ public class SistemPersamaanLinier {
         return result;
     }
 
+    public Matrix kaidahCramer() {
+        Matrix augmentedMatrix = view.getSquareInput().getItem3();
+        KaidahCramer kaidahCramer = new KaidahCramer();
+        Matrix result = kaidahCramer.main(augmentedMatrix);    
+        
+        if (result != null) {
+            if (result.getRowCount() == 1 && result.getColumnCount() == 1) {
+                view.showSingular(result.get(0, 0).intValue());
+                return null;
+            } else {
+                return result;
+            }
+        } else {
+            view.showSingular(result.get(0, 0).intValue());
+            return null;
+        }
+    }
     public void main() {
         int choice = view.getChoice();
         Array result = null;
@@ -80,7 +99,10 @@ public class SistemPersamaanLinier {
                     view.printResult(result);
                 break;
             case 4:
-                // Kaidah Cramer
+                Matrix cramer_result = kaidahCramer();
+                if (cramer_result != null) {
+                    view.printMatrix(cramer_result);
+                }
                 break;
             default:
                 break;
