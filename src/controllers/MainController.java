@@ -20,6 +20,10 @@ public class MainController {
                 break;
             case 4:
                 break;
+            case 5:
+                BicubicSplineInterpolationController bsic = new BicubicSplineInterpolationController();
+                bsic.main();
+                break;
             case 6:
                 RegressionController rc = new RegressionController();
                 rc.main();
