@@ -35,20 +35,21 @@ public class SistemPersamaanLinier {
         return result;
     }
 
-    public void kaidahCramer() {
+    public Matrix kaidahCramer() {
         Matrix augmentedMatrix = view.getSquareInput().getItem3();
         KaidahCramer kaidahCramer = new KaidahCramer();
         Matrix result = kaidahCramer.main(augmentedMatrix);    
         
         if (result != null) {
             if (result.getRowCount() == 1 && result.getColumnCount() == 1) {
-                int singularValue = result.get(0, 0).intValue();
-                view.showSingular(singularValue);
+                view.showSingular(result.get(0, 0).intValue());
+                return null;
             } else {
-                view.printMatrix(result);
+                return result;
             }
         } else {
-            view.showSingular(0);
+            view.showSingular(result.get(0, 0).intValue());
+            return null;
         }
     }
     public void main() {
@@ -66,7 +67,10 @@ public class SistemPersamaanLinier {
                 matriksBalikan();
                 break;
             case 4:
-                kaidahCramer();
+                Matrix cramer_result = kaidahCramer();
+                if (cramer_result != null) {
+                    view.printMatrix(cramer_result);
+                }
                 break;
             default:
                 break;
