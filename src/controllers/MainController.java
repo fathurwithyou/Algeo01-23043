@@ -22,6 +22,10 @@ public class MainController {
                 InterpolasiPolinomController ipc = new InterpolasiPolinomController();
                 ipc.main();
                 break;
+            case 5:
+                BicubicSplineInterpolationController bsic = new BicubicSplineInterpolationController();
+                bsic.main();
+                break;
             case 6:
                 RegressionController rc = new RegressionController();
                 rc.main();
