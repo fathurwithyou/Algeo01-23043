@@ -20,10 +20,8 @@ public class GaussJordan {
         int cols = augmentedMatrix.getColumnCount()-1;
         boolean[] isPivotColumn = new boolean[cols];
 
-        // Perform Gauss-Jordan Elimination to transform the matrix to RREF
         int pivotRow = 0;
         for (int col = 0; col < cols; col++) {
-            // Find the row with the largest absolute value in the current column
             int maxRow = pivotRow;
             for (int row = pivotRow + 1; row < rows; row++) {
                 if (Math.abs(augmentedMatrix.get(row, col)) > Math.abs(augmentedMatrix.get(maxRow, col))) {
@@ -31,21 +29,17 @@ public class GaussJordan {
                 }
             }
 
-            // If the column is entirely zero, move to the next column
             if (augmentedMatrix.get(maxRow, col) == 0) {
                 continue;
             }
 
-            // Swap the current row with the row of the largest element
             swapRows(augmentedMatrix, pivotRow, maxRow);
 
-            // Normalize the pivot row
             double pivotElement = augmentedMatrix.get(pivotRow, col);
             for (int j = 0; j < cols + 1; j++) {
                 augmentedMatrix.set(pivotRow, j, augmentedMatrix.get(pivotRow, j) / pivotElement);
             }
 
-            // Eliminate all other entries in the current column
             for (int row = 0; row < rows; row++) {
                 if (row != pivotRow) {
                     double factor = augmentedMatrix.get(row, col);
@@ -56,21 +50,17 @@ public class GaussJordan {
                 }
             }
 
-            // Mark the current column as a pivot column
             isPivotColumn[col] = true;
             pivotRow++;
 
-            // If we've processed all rows, break
             if (pivotRow == rows) {
                 break;
             }
         }
 
-        // Generate the solution in terms of free variables
         List<String> solutions = new ArrayList<>();
         for (int col = 0; col < cols; col++) {
             if (isPivotColumn[col]) {
-                // The variable is dependent, so express it in terms of other variables
                 StringBuilder expression = new StringBuilder("x" + (col + 1) + " = ");
                 double constant = augmentedMatrix.get(col, cols);
                 if (constant != 0) {
@@ -92,7 +82,6 @@ public class GaussJordan {
 
                 solutions.add(expression.toString());
             } else {
-                // The variable is free
                 solutions.add("x" + (col + 1) + " = t" + (col + 1));
             }
         }
