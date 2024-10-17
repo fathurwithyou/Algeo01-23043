@@ -2,6 +2,7 @@ package src.views.regression;
 
 import src.datatypes.Matrix;
 import src.datatypes.Tuple4;
+import src.datatypes.Tuple3;
 
 import java.util.Scanner;
 
@@ -42,6 +43,21 @@ public class RegressionView {
             Y.set(i, 0, value);
         }
         return new Tuple4<>(n, m, X, Y);
+    }
+
+    public Tuple3<Integer, Integer, Matrix> getInputToPredict(int n){
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Masukkan m (jumlah sampel): ");
+        int m = scanner.nextInt();
+        System.out.println("Masukkan matriks X");
+        Matrix X = new Matrix(m, n);
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                Double value = scanner.nextDouble();
+                X.set(i, j, value);
+            }
+        }
+        return new Tuple3<>(n, m, X);
     }
 
     public void printMatrix(Matrix matrix) {

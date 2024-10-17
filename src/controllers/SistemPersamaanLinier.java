@@ -7,6 +7,7 @@ import src.datatypes.Array;
 import src.datatypes.Matrix;
 import src.datatypes.Tuple3;
 import src.helpers.GetConst;
+import src.helpers.GetMainMatrix;
 import src.models.sistemPersamaanLinier.Gauss;
 import src.models.sistemPersamaanLinier.GaussJordan;
 import src.models.sistemPersamaanLinier.MatriksBalikan;
@@ -15,7 +16,17 @@ import src.views.sistemPersamaanLinier.SistemPersamaanLinierView;
 
 public class SistemPersamaanLinier {
     private SistemPersamaanLinierView view;
-    
+    private GetMainMatrix getMainMatrix = new GetMainMatrix();
+
+    public boolean isSingular(Matrix matrix) {
+        if (matrix.getRowCount() != matrix.getColumnCount()-1) {
+            return true;
+        }
+        if (getMainMatrix.main(matrix).determinant() == 0) {
+            return true;
+        }
+        return false;
+    }
 
     public SistemPersamaanLinier() {
         view = new SistemPersamaanLinierView();
@@ -23,16 +34,13 @@ public class SistemPersamaanLinier {
 
     public Array matriksBalikan() {
         Tuple3<Integer, Integer, Matrix> input = view.getInput();
-        MatriksBalikan matriksBalikan = new MatriksBalikan();
-        if (input.getItem1() == input.getItem2()) {
-            Matrix result = matriksBalikan.main(input);
-            if (result.getRowCount() == 1 && result.getColumnCount() == 1) {
-                view.showSingular(result.get(0, 0).intValue());
-                return null;
-            }
-            return result.flatten();
+        if (isSingular(input.getItem3())) {
+            view.showSingular(0);
+            return null;
         }
-        return null;
+        MatriksBalikan matriksBalikan = new MatriksBalikan();
+        Matrix result = matriksBalikan.main(input);
+        return result.flatten();
     }
 
     public Array gaussJordan() {
@@ -66,21 +74,15 @@ public class SistemPersamaanLinier {
 
     public Array kaidahCramer() {
         Matrix augmentedMatrix = view.getSquareInput().getItem3();
-        KaidahCramer kaidahCramer = new KaidahCramer();
-        Matrix result = kaidahCramer.main(augmentedMatrix);    
-        
-        if (result != null) {
-            if (result.getRowCount() == 1 && result.getColumnCount() == 1) {
-                view.showSingular(result.get(0, 0).intValue());
-                return null;
-            } else {
-                return result.flatten();
-            }
-        } else {
-            view.showSingular(result.get(0, 0).intValue());
+        if (isSingular(augmentedMatrix)) {
+            view.showSingular(0);
             return null;
         }
+        KaidahCramer kaidahCramer = new KaidahCramer();
+        Matrix result = kaidahCramer.main(augmentedMatrix);
+        return result.flatten();
     }
+
     public void main() {
         int choice = view.getChoice();
         Array result = null;
@@ -88,7 +90,8 @@ public class SistemPersamaanLinier {
             case 1:
                 result = gauss();
                 if (result != null) {
-                    view.printResult(result); }
+                    view.printResult(result);
+                }
                 break;
             case 2:
                 result = gaussJordan();

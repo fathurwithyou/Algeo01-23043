@@ -10,10 +10,8 @@ public class CheckConsistency {
             for(int j = 0; j < n; j++) {
                 if(matrix.get(i, j) != 0) {
                     isZero = false;
-                    break;
                 }
             }
-
             if(isZero && matrix.get(i, m) != 0) {
                 flag = 1;
                 break;

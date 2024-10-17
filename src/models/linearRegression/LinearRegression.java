@@ -52,7 +52,6 @@ public class LinearRegression {
     }
 
     public Matrix predict(Matrix X) {
-        view.printMatrix(beta);
         return X.multiply(beta);
     }
 

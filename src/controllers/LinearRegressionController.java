@@ -2,6 +2,7 @@ package src.controllers;
 
 import src.datatypes.Tuple4;
 import src.datatypes.Matrix;
+import src.datatypes.Tuple3;
 import src.views.regression.linearRegression.LinearRegressionView;
 import src.models.linearRegression.LinearRegression;
 
@@ -16,18 +17,20 @@ public class LinearRegressionController {
             Tuple4<Integer, Integer, Matrix, Matrix> input = view.getInput();
             X = input.getItem3();
             y = input.getItem4();
+            Tuple3<Integer, Integer, Matrix> inputToPredict = view.getInputToPredict(input.getItem1());
+            Matrix X_test = inputToPredict.getItem3();
             switch (choice) {
                 case 1:
                     model = new LinearRegression("OLS");
                     model.fit(X, y);
-                    y_pred = model.predict(X);
+                    y_pred = model.predict(X_test);
                     view.printMatrix(y_pred);
                     break;
                 case 2:
                     double alpha = view.getAlpha();
                     model = new LinearRegression("Ridge", alpha);
                     model.fit(X, y);
-                    y_pred = model.predict(X);
+                    y_pred = model.predict(X_test);
                     view.printMatrix(y_pred);
                     break;
             }

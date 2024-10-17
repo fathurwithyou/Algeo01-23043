@@ -3,6 +3,7 @@ package src.datatypes;
 import java.util.ArrayList;
 import java.util.List;
 
+import src.models.determinan.EkspansiKofaktor;
 import src.models.matriksBalikan.AdjoinMethod;
 
 public class Matrix {
@@ -73,6 +74,10 @@ public class Matrix {
 
     public void set(int row, int column, Double value) {
         data.get(row).set(column, value);
+    }
+    
+    public Double determinant(){
+        return new EkspansiKofaktor().ekspansiKofaktor(this);
     }
 
     public Matrix minor(int rowToRemove, int colToRemove) {
