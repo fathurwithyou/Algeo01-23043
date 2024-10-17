@@ -41,7 +41,6 @@ public class SistemPersamaanLinierView {
                 Double value = scanner.nextDouble();
                 coefMatrix.set(i, j, value);
             }
-
         }
         return new Tuple3<>(n, m, coefMatrix);
     }
@@ -64,12 +63,19 @@ public class SistemPersamaanLinierView {
 
     public void showSingular(int flag) {
         if (flag != -1) {
-            if (flag == 0) {
+            if (flag == 2) {
                 System.out.println("Sistem persamaan linier memiliki banyak solusi");
             }
             else{
                 System.out.println("Sistem persamaan linier tidak memiliki solusi");
             }
+        }
+    }
+
+    public void showFreeVariable(List<String> freeVariable) {
+        System.out.println("Variabel bebas:");
+        for (String var : freeVariable) {
+            System.out.println(var);
         }
     }
 

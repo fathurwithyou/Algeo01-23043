@@ -1,22 +1,30 @@
 package src.controllers;
 
 // view
+import src.views.sistemPersamaanLinier.SistemPersamaanLinierView;
 
 // data types
+import java.util.List;
 import src.datatypes.Array;
 import src.datatypes.Matrix;
 import src.datatypes.Tuple3;
+
+// helpers
+import src.helpers.CheckSolutionType;
 import src.helpers.GetConst;
 import src.helpers.GetMainMatrix;
+import src.helpers.GetUniqueEquation;
+// models
 import src.models.sistemPersamaanLinier.Gauss;
 import src.models.sistemPersamaanLinier.GaussJordan;
 import src.models.sistemPersamaanLinier.MatriksBalikan;
 import src.models.sistemPersamaanLinier.KaidahCramer;
-import src.views.sistemPersamaanLinier.SistemPersamaanLinierView;
 
 public class SistemPersamaanLinier {
     private SistemPersamaanLinierView view;
     private GetMainMatrix getMainMatrix = new GetMainMatrix();
+    private CheckSolutionType check = new CheckSolutionType();
+    private GetUniqueEquation getUniqueEquation = new GetUniqueEquation();
 
     public boolean isSingular(Matrix matrix) {
         if (matrix.getRowCount() != matrix.getColumnCount()-1) {
@@ -46,19 +54,21 @@ public class SistemPersamaanLinier {
     public Array gaussJordan() {
         GaussJordan gaussJordan = new GaussJordan();
         Tuple3<Integer, Integer, Matrix> input = view.getInput();
-
-        if (input.getItem1() == input.getItem2()) {
-            Matrix matrix = gaussJordan.main(input);
-            if (matrix.getRowCount() == 1 && matrix.getColumnCount() == 1) {
-                view.showSingular(matrix.get(0, 0).intValue());
-                return null;
-            }
-            Matrix result = new GetConst().getConst(matrix);
-            return result.flatten();
+        int sol = check.checkSolutionType(input.getItem3());
+        if (sol == 0) {
+            view.showSingular(0);
+            return null;
         }
-
-        view.showSingular(0);
-        return null;
+        if(sol == 2) {
+            view.showSingular(2);
+            List<String> res = gaussJordan.gaussJordanFreeVariable(input.getItem3());
+            view.showFreeVariable(res);
+            return null;
+        }
+        
+        Matrix result = gaussJordan.main(getUniqueEquation.main(input.getItem3()));
+        result = new GetConst().getConst(result);
+        return result.flatten();
     }
 
     public Array gauss() {

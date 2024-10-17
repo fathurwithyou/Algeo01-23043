@@ -36,4 +36,11 @@ public class Array {
     public void set(int index, Double value) {
         data.set(index, value);
     }
+
+    public void print() {
+        for (Double value : data) {
+            System.out.print(value + " ");
+        }
+        System.out.println();
+    }
 }

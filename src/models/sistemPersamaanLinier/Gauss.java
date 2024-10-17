@@ -10,7 +10,7 @@ import src.helpers.NormalizeMatrix;
 
 public class Gauss {
     private NormalizeMatrix normalizeMatrix = new NormalizeMatrix();
-
+     
     public Matrix gaussElimination(Integer m, Integer n, Matrix matrix) {
         
         AlignMatrix alignMatrix = new AlignMatrix();
