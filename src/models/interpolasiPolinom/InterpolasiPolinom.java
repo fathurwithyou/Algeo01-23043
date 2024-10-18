@@ -27,7 +27,7 @@ public class InterpolasiPolinom {
 
     public Array interpolasiPolinom(Integer n, Integer m, Matrix X, Matrix Y) {
         Tuple3<Integer, Integer, Matrix> aug = persamaanLanjar(n, m, X, Y);
-        pers = gauss.main(aug);
+        pers = gauss.main(aug.getItem3());
         return pers; //coef of linear equation (a0, a1x, a2x^2 dst)
     }
 

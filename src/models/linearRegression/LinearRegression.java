@@ -36,6 +36,7 @@ public class LinearRegression {
     private void fitOLS(Matrix X, Matrix y) {
         Matrix X_transpose = X.transpose();
         Matrix X_transpose_X = X_transpose.multiply(X);
+        X_transpose_X.print();
         Matrix X_transpose_X_inv = X_transpose_X.inverse();
         Matrix X_transpose_y = X_transpose.multiply(y);
         beta = X_transpose_X_inv.multiply(X_transpose_y);

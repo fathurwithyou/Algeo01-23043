@@ -27,7 +27,7 @@ public class SistemPersamaanLinier {
     private GetUniqueEquation getUniqueEquation = new GetUniqueEquation();
 
     public boolean isSingular(Matrix matrix) {
-        if (matrix.getRowCount() != matrix.getColumnCount()-1) {
+        if (matrix.getRowCount() != matrix.getColumnCount() - 1) {
             return true;
         }
         if (getMainMatrix.main(matrix).determinant() == 0) {
@@ -59,13 +59,13 @@ public class SistemPersamaanLinier {
             view.showSingular(0);
             return null;
         }
-        if(sol == 2) {
+        if (sol == 2) {
             view.showSingular(2);
             List<String> res = gaussJordan.gaussJordanFreeVariable(input.getItem3());
             view.showFreeVariable(res);
             return null;
         }
-        
+
         Matrix result = gaussJordan.main(getUniqueEquation.main(input.getItem3()));
         result = new GetConst().getConst(result);
         return result.flatten();
@@ -74,11 +74,19 @@ public class SistemPersamaanLinier {
     public Array gauss() {
         Gauss gauss = new Gauss();
         Tuple3<Integer, Integer, Matrix> input = view.getInput();
-        Array result = gauss.main(input);
-        if (result.getSize() == 1) {
-            view.showSingular(result.get(0).intValue());
+        int sol = check.checkSolutionType(input.getItem3());
+        if (sol == 0) {
+            view.showSingular(0);
             return null;
         }
+        if (sol == 2) {
+            view.showSingular(2);
+            List<String> res = new GaussJordan().gaussJordanFreeVariable(input.getItem3());
+            view.showFreeVariable(res);
+            return null;
+        }
+
+        Array result = gauss.main(getUniqueEquation.main(input.getItem3()));
         return result;
     }
 
@@ -114,9 +122,9 @@ public class SistemPersamaanLinier {
                     view.printResult(result);
                 break;
             case 4:
-                Array cramer_result = kaidahCramer();
-                if (cramer_result != null) {
-                    view.printResult(cramer_result);
+                result = kaidahCramer();
+                if (result != null) {
+                    view.printResult(result);
                 }
                 break;
             default:

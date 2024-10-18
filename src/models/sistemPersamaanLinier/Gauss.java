@@ -10,9 +10,9 @@ import src.helpers.NormalizeMatrix;
 
 public class Gauss {
     private NormalizeMatrix normalizeMatrix = new NormalizeMatrix();
-     
+
     public Matrix gaussElimination(Integer m, Integer n, Matrix matrix) {
-        
+
         AlignMatrix alignMatrix = new AlignMatrix();
         ForwardElimination forwardElimination = new ForwardElimination();
         alignMatrix.alignMatrix(matrix);
@@ -24,22 +24,13 @@ public class Gauss {
         return matrix;
     }
 
-    public Array main(Tuple3<Integer, Integer, Matrix> data) {
+    public Array main(Matrix data) {
         BackwardSubstitution backwardSubstitution = new BackwardSubstitution();
-        int m = data.getItem1();
-        int n = data.getItem2();
-        Matrix result = gaussElimination(m, n, data.getItem3());
-
-        if (result.getRowCount() == 1 && result.getColumnCount() == 1) {
-            Array flag = new Array(1); 
-            flag.set(0, result.get(0, 0));
-            return flag;
-        } else {
-            Array solution = backwardSubstitution.backwardSubstitution(result);
-            return solution;
-        }
+        int m = data.getRowCount();
+        int n = data.getColumnCount() - 1;
+        Matrix result = gaussElimination(m, n, data);
+        Array solution = backwardSubstitution.backwardSubstitution(result);
+        return solution;
     }
 
 }
-
-
