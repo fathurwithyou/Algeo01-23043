@@ -7,18 +7,16 @@ import src.views.bicubicSplineInterpolation.BicubicSplineInterpolationView;
 
 public class BicubicSplineInterpolationController {
     private BicubicSplineInterpolationView view = new BicubicSplineInterpolationView();
-    private BicubicSplineInterpolation model = new BicubicSplineInterpolation();
-
+    private Matrix matrix;
+    public Double x, y, result;
     public void main() {
-            Tuple3<Matrix, Double, Double> input = view.getInput();
-
-            Matrix Z = input.getItem1(); 
-            Double a = input.getItem2(); 
-            Double b = input.getItem3();
-
-            model.fit(Z);
-            Double result = model.predict(a, b);
-
-            view.printPrediction(result);
-        } 
-    }
+        BicubicSplineInterpolation model = new BicubicSplineInterpolation();
+        Tuple3<Matrix, Double, Double> input = view.getInput();
+        matrix = input.getItem1(); 
+        x = input.getItem2(); 
+        y = input.getItem3();
+        model.fit(matrix, x, y);
+        result = model.predict(x, y);
+        view.printPrediction(result);
+    } 
+}
