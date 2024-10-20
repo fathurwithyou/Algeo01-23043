@@ -61,11 +61,11 @@ public class Matrix {
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                flatten.set(i * cols + j, this.get(i, j)); 
+                flatten.set(i * cols + j, this.get(i, j));
             }
         }
 
-        return flatten; 
+        return flatten;
     }
 
     public Double get(int row, int column) {
@@ -75,8 +75,8 @@ public class Matrix {
     public void set(int row, int column, Double value) {
         data.get(row).set(column, value);
     }
-    
-    public Double determinant(){
+
+    public Double determinant() {
         return new EkspansiKofaktor().ekspansiKofaktor(this);
     }
 
@@ -85,11 +85,11 @@ public class Matrix {
         int minorRow = 0;
         for (int i = 0; i < getRowCount(); i++) {
             if (i == rowToRemove)
-                continue; 
+                continue;
             int minorCol = 0;
             for (int j = 0; j < getColumnCount(); j++) {
                 if (j == colToRemove)
-                    continue; 
+                    continue;
                 minorMatrix.set(minorRow, minorCol, this.get(i, j));
                 minorCol++;
             }
@@ -132,7 +132,7 @@ public class Matrix {
     public static Matrix identity(int n) {
         Matrix identityMatrix = new Matrix(n, n);
         for (int i = 0; i < n; i++) {
-            for(int j = 0; j < n; j++) {
+            for (int j = 0; j < n; j++) {
                 if (i == j) {
                     identityMatrix.set(i, j, 1.0);
                 } else {
