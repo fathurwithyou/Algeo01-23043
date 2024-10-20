@@ -2,13 +2,13 @@ package src.views.regression.linearRegression;
 
 import java.util.Scanner;
 
+import src.datatypes.Matrix;
 import src.views.regression.RegressionView;
 
 public class LinearRegressionView extends RegressionView {
 
     @Override
     public void showMenu() {
-        super.showMenu(); // Call the parent class menu
         System.out.println("Regresi Linear Berganda");
         System.out.println("1. Metode OLS");
         System.out.println("2. Metode Ridge");
@@ -23,7 +23,19 @@ public class LinearRegressionView extends RegressionView {
             showMenu();
             System.out.print("Pilihan: ");
             choice = scanner.nextInt();
-        } while (choice < 1 || choice > 3); 
+        } while (choice < 1 || choice > 3);
+        return choice;
+    }
+
+    public int getMethod() {
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+        do {
+            System.out.println("1. File");
+            System.out.println("2. Stdin");
+            System.out.print("Pilihan: ");
+            choice = scanner.nextInt();
+        } while (choice < 1 || choice > 2);
         return choice;
     }
 
@@ -31,5 +43,24 @@ public class LinearRegressionView extends RegressionView {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Masukkan alpha: ");
         return scanner.nextDouble();
+    }
+
+    public void printOutput(Matrix beta, Matrix y_pred) {
+        System.out.print("f(X) = " + String.format("%.2f", beta.get(0, 0)));
+
+        for (int i = 1; i < beta.getRowCount(); i++) {
+            double coeff = beta.get(i, 0);
+            if (coeff >= 0) {
+                System.out.print(" + " + String.format("%.2f", coeff) + "x" + i);
+            } else {
+                System.out.print(" - " + String.format("%.2f", Math.abs(coeff)) + "x" + i);
+            }
+        }
+
+        System.out.println();
+
+        for (int i = 0; i < y_pred.getRowCount(); i++) {
+            System.out.println("f(x" + (i + 1) + ") = " + String.format("%.2f", y_pred.get(i, 0)));
+        }
     }
 }

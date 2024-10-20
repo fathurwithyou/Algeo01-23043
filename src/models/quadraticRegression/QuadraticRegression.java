@@ -18,36 +18,35 @@ public class QuadraticRegression {
     private Matrix processX(Matrix X) {
         int rows = X.getRowCount();
         int cols = X.getColumnCount();
-        int newCols = cols * (cols + 1) / 2 + 1; 
+        int newCols = cols * (cols + 1) / 2 + cols + 1; // Bias, original features, squared features, and interaction
+                                                        // terms
         Matrix X_quadratic = new Matrix(rows, newCols);
         int index = 0;
 
+        // Bias term (intercept)
         for (int i = 0; i < rows; i++) {
-            X_quadratic.set(i, index++, 1.0); // Bias
+            X_quadratic.set(i, 0, 1.0); // Bias term
         }
 
         for (int j = 0; j < cols; j++) {
-            // Original
             for (int i = 0; i < rows; i++) {
-                if (index < newCols) {
-                    X_quadratic.set(i, index++, X.get(i, j));
-                }
+                X_quadratic.set(i, index, X.get(i, j)); 
             }
+            index++; 
 
-            // Squared
             for (int i = 0; i < rows; i++) {
-                if (index < newCols) { 
-                    X_quadratic.set(i, index++, Math.pow(X.get(i, j), 2));
-                }
+                X_quadratic.set(i, index, Math.pow(X.get(i, j), 2)); // Squared feature
             }
+            index++; 
+        }
 
-            // Interaction
+        // Interaction terms
+        for (int j = 0; j < cols; j++) {
             for (int k = j + 1; k < cols; k++) {
                 for (int i = 0; i < rows; i++) {
-                    if (index < newCols) { 
-                        X_quadratic.set(i, index++, X.get(i, j) * X.get(i, k));
-                    }
+                    X_quadratic.set(i, index, X.get(i, j) * X.get(i, k)); // Interaction term
                 }
+                index++; 
             }
         }
 
@@ -56,11 +55,10 @@ public class QuadraticRegression {
 
     public void fit(Matrix X, Matrix y) {
         Matrix X_quadratic = processX(X);
-        
-        int newCols = X_quadratic.getColumnCount(); 
-        
-        Matrix I = Matrix.identity(newCols); 
-        
+
+        int newCols = X_quadratic.getColumnCount();
+
+        Matrix I = Matrix.identity(newCols);
         Matrix X_transpose = X_quadratic.transpose();
         Matrix X_transpose_X = X_transpose.multiply(X_quadratic);
         Matrix regularizationTerm = I.multiplyConst(alpha);

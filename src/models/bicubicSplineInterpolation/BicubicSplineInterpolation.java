@@ -79,7 +79,7 @@ public class BicubicSplineInterpolation {
     
     public Array bicubicSplineInterpolation(Matrix matrix, Double x, Double y) {
         Tuple3<Integer, Integer, Matrix> aug = createAugmentedMatrix(matrix, x, y);
-        pers = gauss.main(aug);
+        pers = gauss.main(aug.getItem3());
         return pers;
     }
     
