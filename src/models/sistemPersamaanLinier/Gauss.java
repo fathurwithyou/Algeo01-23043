@@ -2,34 +2,53 @@ package src.models.sistemPersamaanLinier;
 
 import src.datatypes.Array;
 import src.datatypes.Matrix;
-import src.helpers.AlignMatrix;
 import src.helpers.BackwardSubstitution;
-import src.helpers.ForwardElimination;
-import src.helpers.NormalizeMatrix;
+import src.helpers.SwapRows;
 
 public class Gauss {
-    private NormalizeMatrix normalizeMatrix = new NormalizeMatrix();
+    private SwapRows swapRows = new SwapRows();
+    private double EPSILON = 1e-6;
 
-    public Matrix gaussElimination(Integer m, Integer n, Matrix matrix) {
+    public boolean isNearZero(double x) {
+        return Math.abs(x) < EPSILON;
+    }
 
-        AlignMatrix alignMatrix = new AlignMatrix();
-        ForwardElimination forwardElimination = new ForwardElimination();
-        alignMatrix.alignMatrix(matrix);
+    public Matrix gaussElimination(Matrix augmentedMatrix) {
+        int rows = augmentedMatrix.getRowCount();
+        int cols = augmentedMatrix.getColumnCount() - 1;
 
-        forwardElimination.forwardElimination(m, n, matrix);
+        for (int pivot = 0; pivot < Math.min(rows, cols); pivot++) {
+            int maxRow = pivot;
+            for (int row = pivot + 1; row < rows; row++) {
+                if (Math.abs(augmentedMatrix.get(row, pivot)) > Math.abs(augmentedMatrix.get(maxRow, pivot))) {
+                    maxRow = row;
+                }
+            }
 
-        normalizeMatrix.normalizeMatrix(m, n, matrix);
+            if (isNearZero(augmentedMatrix.get(maxRow, pivot))) {
+                continue;
+            }
 
-        return matrix;
+            swapRows.swapRows(augmentedMatrix, pivot, maxRow);
+            double pivotElement = augmentedMatrix.get(pivot, pivot);
+            for (int col = 0; col <= cols; col++) {
+                augmentedMatrix.set(pivot, col, augmentedMatrix.get(pivot, col) / pivotElement);
+            }
+
+            for (int row = pivot + 1; row < rows; row++) {
+                double factor = augmentedMatrix.get(row, pivot);
+                for (int col = pivot; col <= cols; col++) {
+                    augmentedMatrix.set(row, col, augmentedMatrix.get(row, col) - factor * augmentedMatrix.get(pivot, col));
+                }
+            }
+        }
+        return augmentedMatrix;
     }
 
     public Array main(Matrix data) {
         BackwardSubstitution backwardSubstitution = new BackwardSubstitution();
-        int m = data.getRowCount();
-        int n = data.getColumnCount() - 1;
-        Matrix result = gaussElimination(m, n, data);
+        Matrix result = gaussElimination(data);
         Array solution = backwardSubstitution.backwardSubstitution(result);
         return solution;
     }
-
 }

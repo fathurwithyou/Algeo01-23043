@@ -33,16 +33,6 @@ public class SistemPersamaanLinier {
     private Matrix matrix;
     private int n, m;
 
-    public Matrix getFirstNMatrix(Matrix matrix) {
-        int newRow = Math.min(m, matrix.getRowCount());
-        Matrix result = new Matrix(newRow, m+1);
-        for (int i = 0; i < newRow; i++) {
-            for (int j = 0; j < m+1; j++) {
-                result.set(i, j, matrix.get(i, j));
-            }
-        }
-        return result;
-    }
 
     public boolean isSingular(Matrix matrix) {
         if (matrix.getRowCount() != matrix.getColumnCount() - 1) {
@@ -82,9 +72,8 @@ public class SistemPersamaanLinier {
             return null;
         }
 
-        Matrix result = gaussJordan.main(getUniqueEquation.main(input.getItem3()));
-        result = new GetConst().getConst(result);
-        return result.flatten();
+        Array result = gaussJordan.main(getUniqueEquation.main(input.getItem3()));
+        return result;
     }
 
     public Array gauss() {
@@ -101,7 +90,6 @@ public class SistemPersamaanLinier {
             return null;
         }
         matrix = getUniqueEquation.main(input.getItem3());
-        matrix = getFirstNMatrix(matrix);
         Array result = gauss.main(matrix);
         return result;
     }
