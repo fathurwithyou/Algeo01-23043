@@ -103,7 +103,7 @@ public class SistemPersamaanLinierView {
                     tmp.set(i, j, X.get(i).get(j));
                 }
             }
-            return new Tuple3<>(n, m, tmp);
+            return new Tuple3<>(n, m-1, tmp);
 
         } catch (FileNotFoundException e) {
             System.out.println("File tidak ditemukan.");

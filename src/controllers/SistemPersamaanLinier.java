@@ -33,6 +33,17 @@ public class SistemPersamaanLinier {
     private Matrix matrix;
     private int n, m;
 
+    public Matrix getFirstNMatrix(Matrix matrix) {
+        int newRow = Math.min(m, matrix.getRowCount());
+        Matrix result = new Matrix(newRow, m+1);
+        for (int i = 0; i < newRow; i++) {
+            for (int j = 0; j < m+1; j++) {
+                result.set(i, j, matrix.get(i, j));
+            }
+        }
+        return result;
+    }
+
     public boolean isSingular(Matrix matrix) {
         if (matrix.getRowCount() != matrix.getColumnCount() - 1) {
             return true;
@@ -89,8 +100,9 @@ public class SistemPersamaanLinier {
             view.showFreeVariable(res);
             return null;
         }
-
-        Array result = gauss.main(getUniqueEquation.main(input.getItem3()));
+        matrix = getUniqueEquation.main(input.getItem3());
+        matrix = getFirstNMatrix(matrix);
+        Array result = gauss.main(matrix);
         return result;
     }
 
@@ -113,6 +125,8 @@ public class SistemPersamaanLinier {
             pprint.inputMatrix();
             Utils.printMatrix(input.getItem3());
             matrix = input.getItem3();
+            n = input.getItem1();
+            m = input.getItem2();
         } else {
             pprint.inputMatrix();
             input = view.getInput();
