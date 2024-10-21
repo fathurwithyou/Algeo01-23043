@@ -63,7 +63,7 @@ public class DeterminanView {
         return new Tuple3<>(n, n, coefMatrix);
     }
 
-    public Tuple3<Integer, Integer, Matrix> getInputFromFile(int degree) {
+    public Tuple3<Integer, Integer, Matrix> getInputFromFile() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Masukkan path file input: ");
         String filename = scanner.nextLine();

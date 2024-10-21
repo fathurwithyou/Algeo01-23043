@@ -21,7 +21,6 @@ public class GaussJordan {
         int cols = augmentedMatrix.getColumnCount() - 1;
         boolean[] isPivotColumn = new boolean[cols];
 
-        // Perform Gauss-Jordan Elimination
         int pivotRow = 0;
         for (int col = 0; col < cols; col++) {
             int maxRow = pivotRow;

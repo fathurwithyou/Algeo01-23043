@@ -58,10 +58,11 @@ public class QuadraticRegressionView extends RegressionView {
 
         System.out.println();
 
-        // Print the predicted values
+        // Print the predicted values in green
         for (int i = 0; i < y_pred.getRowCount(); i++) {
-            System.out.println("f(x" + (i + 1) + ") = " + String.format("%.2f", y_pred.get(i, 0)));
+            System.out.println("f(x" + (i + 1) + ") = \033[32m" + String.format("%.2f", y_pred.get(i, 0)) + "\033[0m");
         }
+
     }
 
 }

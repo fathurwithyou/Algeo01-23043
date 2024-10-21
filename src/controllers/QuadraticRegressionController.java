@@ -2,15 +2,19 @@ package src.controllers;
 
 import src.datatypes.Tuple4;
 import src.datatypes.Tuple5;
+
+import src.helpers.Utils;
+
 import src.datatypes.Matrix;
 import src.datatypes.Tuple3;
 import src.views.Menu;
+import src.views.Pprint;
 import src.views.regression.quadraticRegression.QuadraticRegressionView;
 import src.models.quadraticRegression.QuadraticRegression;
 
 public class QuadraticRegressionController {
     private QuadraticRegressionView view = new QuadraticRegressionView();
-
+    private Pprint pprint = new Pprint();
     private Matrix y_pred, y, X, X_test;
 
     public void getInput() {
@@ -20,12 +24,16 @@ public class QuadraticRegressionController {
             Tuple5<Integer, Integer, Matrix, Matrix, Matrix> input = view.getInputFromFile(2);
             X = input.getItem3();
             y = input.getItem4();
+            pprint.showData();
+            Utils.printData(X, y);
             X_test = input.getItem5();
 
         } else {
             Tuple4<Integer, Integer, Matrix, Matrix> input = view.getInput();
             X = input.getItem3();
             y = input.getItem4();
+            pprint.showData();
+            Utils.printData(X, y);
             Tuple3<Integer, Integer, Matrix> inputToPredict = view.getInputToPredict(input.getItem1());
             X_test = inputToPredict.getItem3();
         }

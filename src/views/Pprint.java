@@ -1,6 +1,5 @@
 package src.views;
 
-import java.util.Scanner;
 import src.helpers.GetString;
 
 public class Pprint {
@@ -26,8 +25,13 @@ public class Pprint {
         inputBoundary(true);
     }
 
+    public void showData() {
+        String boundary = "\n\033[1m\033[33m" + GetString.main("data") + "\033[0m";
+        System.out.println(boundary);
+    }
+
     public void showResult() {
-        String boundary = "\n\033[1m\033[33m" + GetString.main("result") + "\033[0m";
+        String boundary = "\n\033[1m\033[32m" + GetString.main("result") + "\033[0m";
         System.out.println(boundary);
     }
 }

@@ -52,7 +52,7 @@ public class LinearRegressionView extends RegressionView {
 
     public void printOutput(Matrix beta, Matrix y_pred) {
         pprint.showResult();
-        System.out.print("f(X) = " + String.format("%.2f", beta.get(0, 0)));
+        System.out.print("\033[1mf(X) = " + String.format("%.2f", beta.get(0, 0)));
 
         for (int i = 1; i < beta.getRowCount(); i++) {
             double coeff = beta.get(i, 0);

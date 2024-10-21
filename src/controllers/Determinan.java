@@ -30,7 +30,7 @@ public class Determinan {
         view.showHeader(c);
         int method = new Menu().getMethod();
         if (method == 1) {
-            input = view.getInputFromFile(2);
+            input = view.getInputFromFile();
             pprint.inputMatrix();
             Utils.printMatrix(input.getItem3());
             n = input.getItem1();

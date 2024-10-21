@@ -5,10 +5,14 @@ import src.datatypes.Tuple4;
 import src.datatypes.Matrix;
 import src.datatypes.Tuple3;
 import src.views.Menu;
+import src.views.Pprint;
 import src.views.regression.linearRegression.LinearRegressionView;
 import src.models.linearRegression.LinearRegression;
 
+import src.helpers.Utils;
+
 public class LinearRegressionController {
+    private Pprint pprint = new Pprint();
     private LinearRegressionView view = new LinearRegressionView();
     private Matrix y_pred, y, X, X_test;
 
@@ -19,6 +23,8 @@ public class LinearRegressionController {
             Tuple5<Integer, Integer, Matrix, Matrix, Matrix> input = view.getInputFromFile(1);
             X = input.getItem3();
             y = input.getItem4();
+            pprint.showData();
+            Utils.printData(X, y);
             X_test = input.getItem5();
 
         } else {

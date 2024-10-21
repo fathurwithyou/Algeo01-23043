@@ -1,5 +1,7 @@
 package src.controllers;
 
+import src.views.Menu;
+import src.views.Pprint;
 // view
 import src.views.sistemPersamaanLinier.SistemPersamaanLinierView;
 
@@ -14,6 +16,7 @@ import src.helpers.CheckSolutionType;
 import src.helpers.GetConst;
 import src.helpers.GetMainMatrix;
 import src.helpers.GetUniqueEquation;
+import src.helpers.Utils;
 // models
 import src.models.sistemPersamaanLinier.Gauss;
 import src.models.sistemPersamaanLinier.GaussJordan;
@@ -25,6 +28,10 @@ public class SistemPersamaanLinier {
     private GetMainMatrix getMainMatrix = new GetMainMatrix();
     private CheckSolutionType check = new CheckSolutionType();
     private GetUniqueEquation getUniqueEquation = new GetUniqueEquation();
+    private Pprint pprint = new Pprint();
+    private Tuple3<Integer, Integer, Matrix> input;
+    private Matrix matrix;
+    private int n, m;
 
     public boolean isSingular(Matrix matrix) {
         if (matrix.getRowCount() != matrix.getColumnCount() - 1) {
@@ -41,7 +48,6 @@ public class SistemPersamaanLinier {
     }
 
     public Array matriksBalikan() {
-        Tuple3<Integer, Integer, Matrix> input = view.getInput();
         if (isSingular(input.getItem3())) {
             view.showSingular(0);
             return null;
@@ -53,7 +59,6 @@ public class SistemPersamaanLinier {
 
     public Array gaussJordan() {
         GaussJordan gaussJordan = new GaussJordan();
-        Tuple3<Integer, Integer, Matrix> input = view.getInput();
         int sol = check.checkSolutionType(input.getItem3());
         if (sol == 0) {
             view.showSingular(0);
@@ -73,7 +78,6 @@ public class SistemPersamaanLinier {
 
     public Array gauss() {
         Gauss gauss = new Gauss();
-        Tuple3<Integer, Integer, Matrix> input = view.getInput();
         int sol = check.checkSolutionType(input.getItem3());
         if (sol == 0) {
             view.showSingular(0);
@@ -101,34 +105,45 @@ public class SistemPersamaanLinier {
         return result.flatten();
     }
 
+    public void getInput(int c) {
+        view.showHeader(c);
+        int method = new Menu().getMethod();
+        if (method == 1) {
+            input = view.getInputFromFile();
+            pprint.inputMatrix();
+            Utils.printMatrix(input.getItem3());
+            matrix = input.getItem3();
+        } else {
+            pprint.inputMatrix();
+            input = view.getInput();
+            matrix = input.getItem3();
+        }
+    }
+
     public void main() {
         int choice = view.getChoice();
+        getInput(choice);
         Array result = null;
         switch (choice) {
             case 1:
                 result = gauss();
-                if (result != null) {
-                    view.printResult(result);
-                }
                 break;
             case 2:
                 result = gaussJordan();
-                if (result != null)
-                    view.printResult(result);
                 break;
             case 3:
                 result = matriksBalikan();
-                if (result != null)
-                    view.printResult(result);
                 break;
             case 4:
                 result = kaidahCramer();
-                if (result != null) {
-                    view.printResult(result);
-                }
+
                 break;
             default:
                 break;
+        }
+        if (result != null) {
+            pprint.showResult();
+            view.printResult(result);
         }
     }
 }

@@ -2,7 +2,6 @@ package src.models.sistemPersamaanLinier;
 
 import src.datatypes.Array;
 import src.datatypes.Matrix;
-import src.datatypes.Tuple3;
 import src.helpers.AlignMatrix;
 import src.helpers.BackwardSubstitution;
 import src.helpers.ForwardElimination;
