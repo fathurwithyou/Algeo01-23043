@@ -42,7 +42,7 @@ public class DeterminanView {
     }
 
     public void printDeterminant(double determinant) {
-        System.out.println(determinant);
+        System.out.printf("Determinan: %.2f\n", determinant);
     }
 
 }

@@ -3,8 +3,15 @@ package src.views.matriksBalikan;
 import java.util.Scanner;
 import src.datatypes.Matrix;
 import src.datatypes.Tuple3;
+import src.datatypes.Tuple5;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MatriksBalikanView {
+    private final String[] filepath = { "test/matriksBalikanDeterminan/" };
+
     public void showMenu() {
         System.out.println("Matriks Balikan");
         System.out.println("1. Metode GaussJordanElimination");
@@ -38,17 +45,68 @@ public class MatriksBalikanView {
         return new Tuple3<>(n, n, coefMatrix);
     }
 
-    public void printMatrix(Matrix matrix) {
+    public Tuple3<Integer, Integer, Matrix> getInputFromFile(int degree) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Masukkan nama file: ");
+        String filename = scanner.nextLine();
+        try {
+            File file = new File(filepath[degree - 1] + filename + ".txt");
+            Scanner fileScanner = new Scanner(file);
+            List<List<Double>> X = new ArrayList<>();
+            String[] values;
+
+            while (fileScanner.hasNextLine()) {
+                values = fileScanner.nextLine().split("\\s+");
+                List<Double> row = new ArrayList<>();
+                for (int i = 0; i < values.length; i++) {
+                    row.add(Double.parseDouble(values[i]));
+                }
+                X.add(row);
+            }
+            int n = X.size();
+            Matrix tmp = new Matrix(n, n);
+
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    tmp.set(i, j, X.get(i).get(j));
+                }
+            }
+            return new Tuple3<>(n, n, tmp);
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File tidak ditemukan.");
+            return new Tuple3<>(0, 0, null);
+        }
+    }
+
+    public int maxi(Matrix matrix) {
+        double max = -(1 << 31);
         for (int i = 0; i < matrix.getRowCount(); i++) {
             for (int j = 0; j < matrix.getColumnCount(); j++) {
-                System.out.print(matrix.get(i, j) + " ");
+                max = Math.max(max, matrix.get(i, j));
             }
-            System.out.println();
+        }
+        return (int) max;
+    }
+
+    public void printMatrix(Matrix matrix) {
+        System.out.println("Hasil dari Matriks Balikan (Inverse Matrix)");
+        int prec = 3;
+        int w = maxi(matrix) / 10 + 3 + prec;
+        for (int i = 0; i < matrix.getRowCount(); i++) {
+            System.out.print('[');
+            for (int j = 0; j < matrix.getColumnCount(); j++) {
+                System.out.printf("%" + w + "." + prec + "f", matrix.get(i, j));
+                if (j < matrix.getColumnCount() - 1) {
+                    System.out.print('\t');
+                }
+            }
+            System.out.println(']');
         }
     }
 
     public void showSingular() {
         System.out.println("Matriks singular");
     }
-    
+
 }

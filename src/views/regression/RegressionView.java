@@ -2,6 +2,7 @@ package src.views.regression;
 
 import src.datatypes.Matrix;
 import src.datatypes.Tuple5;
+import src.helpers.Utils;
 import src.datatypes.Tuple4;
 import src.datatypes.Tuple3;
 
@@ -10,26 +11,52 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+import src.views.Menu;
 
 public class RegressionView {
-    private String[] filepath = new String[] {"test/linearRegression/", "test/quadraticRegression/"};
+    private Menu menu = new Menu();
+    private String root = "src/views/regression/";
+    private String[] filepath = new String[] { "test/linearRegression/", "test/quadraticRegression/" };
+
+    public String getString(String filename) {
+        try {
+            StringBuilder asciiArt = new StringBuilder();
+
+            BufferedReader reader = new BufferedReader(new FileReader(root + filename + ".txt"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                asciiArt.append(line).append("\n"); // Appending each line followed by a new line
+            }
+            reader.close();
+            return asciiArt.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 
     public void showMenu() {
-        System.out.println("Regresi");
+        String coloredAsciiArt = "\033[32m" + getString("header") + "\033[0m";
+        System.out.println(coloredAsciiArt);
+        System.out.println("\033[1m>>> Available Methods:");
         System.out.println("1. Regresi Linear Berganda");
         System.out.println("2. Regresi Kuadratik");
-        System.out.println("3. Input dari File");
-        System.out.println("4. Keluar");
+        System.out.println("3. Keluar");
     }
 
     public int getChoice() {
         Scanner scanner = new Scanner(System.in);
         int choice;
         do {
+            Utils.clearTerminal();
             showMenu();
-            System.out.print("Pilihan: ");
+            menu.inputBoundary();
             choice = scanner.nextInt();
-        } while (choice < 1 || choice > 4);
+        } while (choice < 1 || choice > 3);
         return choice;
     }
 
@@ -68,24 +95,12 @@ public class RegressionView {
         return new Tuple3<>(n, m, X);
     }
 
-    public int getMethod() {
-        Scanner scanner = new Scanner(System.in);
-        int choice;
-        do {
-            System.out.println("1. File");
-            System.out.println("2. Stdin");
-            System.out.print("Pilihan: ");
-            choice = scanner.nextInt();
-        } while (choice < 1 || choice > 2);
-        return choice;
-    }
-
     public Tuple5<Integer, Integer, Matrix, Matrix, Matrix> getInputFromFile(int degree) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Masukkan path file input: ");
         String filename = scanner.nextLine();
         try {
-            File file = new File(filepath[degree-1] + filename);
+            File file = new File(filepath[degree - 1] + filename + ".txt");
             Scanner fileScanner = new Scanner(file);
             int m, n;
             List<List<Double>> XList = new ArrayList<>();

@@ -3,28 +3,22 @@ package src.views.regression.quadraticRegression;
 import java.util.Scanner;
 
 import src.datatypes.Matrix;
+import src.helpers.Utils;
 import src.views.regression.RegressionView;
+import src.views.Menu;
 
 public class QuadraticRegressionView extends RegressionView {
+    private Menu menu = new Menu();
 
-    public void showMenu() {
-        System.out.println("Regresi Kuadratik");
-        System.out.println("1. Hitung Regresi Kuadratik");
-        System.out.println("2. Keluar");
-    }
+    public void showHeader() {
+        Utils.clearTerminal();
+        String header = "\n\033[1m\033[32m" + getString("quadraticRegression/header") + "\033[0m";
+        System.out.println(header);
 
-    public int getChoice() {
-        Scanner scanner = new Scanner(System.in);
-        int choice;
-        do {
-            showMenu();
-            System.out.print("Pilihan: ");
-            choice = scanner.nextInt();
-        } while (choice < 1 || choice > 2);
-        return choice;
     }
 
     public void printOutput(Matrix beta, Matrix y_pred, int numFeatures) {
+        menu.showResult();
         System.out.print("f(X) = " + String.format("%.2f", beta.get(0, 0)));
 
         int index = 1;

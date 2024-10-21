@@ -1,17 +1,12 @@
 package src.models.quadraticRegression;
 
 import src.datatypes.Matrix;
-import src.views.regression.RegressionView;
 
 public class QuadraticRegression {
     private Matrix beta;
-    private RegressionView view = new RegressionView();
-    private String method;
     private double alpha;
 
     public QuadraticRegression(String method, double alpha) {
-        this.view = new RegressionView();
-        this.method = method;
         this.alpha = alpha;
     }
 

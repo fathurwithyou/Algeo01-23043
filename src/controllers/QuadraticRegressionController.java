@@ -4,6 +4,7 @@ import src.datatypes.Tuple4;
 import src.datatypes.Tuple5;
 import src.datatypes.Matrix;
 import src.datatypes.Tuple3;
+import src.views.Menu;
 import src.views.regression.quadraticRegression.QuadraticRegressionView;
 import src.models.quadraticRegression.QuadraticRegression;
 
@@ -13,7 +14,8 @@ public class QuadraticRegressionController {
     private Matrix y_pred, y, X, X_test;
 
     public void getInput() {
-        int method = view.getMethod();
+        view.showHeader();
+        int method = new Menu().getMethod();
         if (method == 1) {
             Tuple5<Integer, Integer, Matrix, Matrix, Matrix> input = view.getInputFromFile(2);
             X = input.getItem3();
@@ -28,21 +30,12 @@ public class QuadraticRegressionController {
             X_test = inputToPredict.getItem3();
         }
     }
+
     public void main() {
-        int choice = view.getChoice();
-        QuadraticRegression model = null;
-        if (choice >= 1 && choice <= 2) {
-            getInput();
-            switch (choice) {
-                case 1:
-                    model = new QuadraticRegression("Ridge", 0.01);
-                    model.fit(X, y);
-                    y_pred = model.predict(X_test);
-                    view.printOutput(model.getBeta(), y_pred, X.getColumnCount());
-                    break;
-            }
-        } else {
-            System.out.println("Pilihan tidak valid. Silakan coba lagi.");
-        }
+        getInput();
+        QuadraticRegression model = new QuadraticRegression("Ridge", 0);
+        model.fit(X, y);
+        y_pred = model.predict(X_test);
+        view.printOutput(model.getBeta(), y_pred, X.getColumnCount());
     }
 }

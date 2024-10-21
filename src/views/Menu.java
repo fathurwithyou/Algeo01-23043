@@ -1,10 +1,47 @@
 package src.views;
 
 import java.util.*;
+import java.io.*;
+import src.helpers.Utils;
 
 public class Menu {
+
+    public String getString(String filename) {
+        try {
+            StringBuilder asciiArt = new StringBuilder();
+
+            BufferedReader reader = new BufferedReader(new FileReader("src/views/" + filename + ".txt"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                asciiArt.append(line).append("\n"); // Appending each line followed by a new line
+            }
+            reader.close();
+            return asciiArt.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public void inputBoundary() {
+        String boundary = "\n\033[1m\033[34m" + getString("input") + "\033[0m";
+
+        System.out.println(boundary);
+
+        System.out.println("\033[1mEnter command in number format.");
+        System.out.print("Input: \033[0m");
+    }
+
+    public void showResult() {
+        String boundary = "\n\033[1m\033[33m" + getString("result") + "\033[0m";
+        System.out.println(boundary);
+    }
+
     public void showMenu() {
-        System.out.println("MENU");
+        String coloredAsciiArt = "\033[32m" + getString("ascii") + "\033[0m";
+        System.out.println(coloredAsciiArt);
+
+        System.out.println("\033[1m>>> Available Methods:");
         System.out.println("1. Sistem Persamaan Linier");
         System.out.println("2. Determinan");
         System.out.println("3. Matriks Balikan");
@@ -13,7 +50,21 @@ public class Menu {
         System.out.println("6. Regresi Linier dan Kuadratik Berganda");
         System.out.println("7. Interpolasi Gambar");
         System.out.println("8. Keluar");
-        System.out.print("Pilih menu: ");
+
+    }
+    
+
+    public int getMethod() {
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+        do {
+            System.out.println("\033[1m>>> Available Input Methods:");
+            System.out.println("1. File");
+            System.out.println("2. Stdin");
+            inputBoundary();
+            choice = scanner.nextInt();
+        } while (choice < 1 || choice > 2);
+        return choice;
     }
 
     public int getChoice() {
@@ -21,7 +72,9 @@ public class Menu {
         String temp;
         int choice;
         do {
+            Utils.clearTerminal();
             showMenu();
+            inputBoundary();
             temp = scanner.nextLine();
             try {
                 choice = Integer.parseInt(temp);
