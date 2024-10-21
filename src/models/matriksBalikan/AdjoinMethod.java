@@ -16,6 +16,7 @@ public class AdjoinMethod {
                 adjoin.set(i, j, Math.pow(-1, i + j) * new EkspansiKofaktor().main(matrix.minor(i, j)) / determinant);
             }   
         }
+        adjoin = adjoin.transpose();
         return adjoin;
     }
 

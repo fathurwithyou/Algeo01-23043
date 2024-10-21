@@ -1,20 +1,22 @@
 package src.controllers;
 
 import src.views.Menu;
+import src.views.Pprint;
 import src.views.matriksBalikan.MatriksBalikanView;
 
 import src.datatypes.Matrix;
 import src.datatypes.Tuple3;
-import src.datatypes.Tuple4;
-import src.datatypes.Tuple5;
 import src.models.determinan.EkspansiKofaktor;
 import src.models.matriksBalikan.AdjoinMethod;
 import src.models.matriksBalikan.GaussJordanMethod;
+
+import src.helpers.Utils;
 
 public class MatriksBalikanController {
     private MatriksBalikanView view = new MatriksBalikanView();
     private AdjoinMethod adjoinMethod = new AdjoinMethod();
     public GaussJordanMethod gaussJordanMethod = new GaussJordanMethod();
+    private Pprint pprint = new Pprint();
     private Matrix matrix;
 
     public boolean isSingular(Matrix matrix) {
@@ -51,13 +53,17 @@ public class MatriksBalikanController {
         switch (choice) {
             case 1:
                 matrix = gaussJordanMethod();
-                if (matrix != null)
-                    view.printMatrix(matrix);
+                if (matrix != null) {
+                    pprint.showResult();
+                    Utils.printMatrix(matrix);
+                }
                 break;
             case 2:
                 matrix = adjoinMethod();
-                if (matrix != null)
-                    view.printMatrix(matrix);
+                if (matrix != null) {
+                    pprint.showResult();
+                    Utils.printMatrix(matrix);
+                }
                 break;
             case 3:
                 System.out.println("Keluar");

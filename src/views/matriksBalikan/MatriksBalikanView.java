@@ -3,7 +3,6 @@ package src.views.matriksBalikan;
 import java.util.Scanner;
 import src.datatypes.Matrix;
 import src.datatypes.Tuple3;
-import src.datatypes.Tuple5;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -76,32 +75,6 @@ public class MatriksBalikanView {
         } catch (FileNotFoundException e) {
             System.out.println("File tidak ditemukan.");
             return new Tuple3<>(0, 0, null);
-        }
-    }
-
-    public int maxi(Matrix matrix) {
-        double max = -(1 << 31);
-        for (int i = 0; i < matrix.getRowCount(); i++) {
-            for (int j = 0; j < matrix.getColumnCount(); j++) {
-                max = Math.max(max, matrix.get(i, j));
-            }
-        }
-        return (int) max;
-    }
-
-    public void printMatrix(Matrix matrix) {
-        System.out.println("Hasil dari Matriks Balikan (Inverse Matrix)");
-        int prec = 3;
-        int w = maxi(matrix) / 10 + 3 + prec;
-        for (int i = 0; i < matrix.getRowCount(); i++) {
-            System.out.print('[');
-            for (int j = 0; j < matrix.getColumnCount(); j++) {
-                System.out.printf("%" + w + "." + prec + "f", matrix.get(i, j));
-                if (j < matrix.getColumnCount() - 1) {
-                    System.out.print('\t');
-                }
-            }
-            System.out.println(']');
         }
     }
 

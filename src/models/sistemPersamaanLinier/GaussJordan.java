@@ -1,10 +1,7 @@
 package src.models.sistemPersamaanLinier;
 
 import src.datatypes.Matrix;
-import src.datatypes.Tuple3;
 import src.helpers.ForwardElimination;
-import src.helpers.GetConst;
-import src.helpers.GetMainMatrix;
 import src.helpers.AlignMatrix;
 import src.helpers.BackwardElimination;
 import src.helpers.NormalizeMatrix;
@@ -13,13 +10,18 @@ import java.util.List;
 
 public class GaussJordan {
     private NormalizeMatrix normalizeMatrix = new NormalizeMatrix();
+    private double EPSILON = 1e-6;
+
+    public boolean isInside(double x) {
+        return Math.abs(x) < EPSILON;
+    }
 
     public List<String> gaussJordanFreeVariable(Matrix augmentedMatrix) {
-      
         int rows = augmentedMatrix.getRowCount();
-        int cols = augmentedMatrix.getColumnCount()-1;
+        int cols = augmentedMatrix.getColumnCount() - 1;
         boolean[] isPivotColumn = new boolean[cols];
 
+        // Perform Gauss-Jordan Elimination
         int pivotRow = 0;
         for (int col = 0; col < cols; col++) {
             int maxRow = pivotRow;
@@ -29,7 +31,7 @@ public class GaussJordan {
                 }
             }
 
-            if (augmentedMatrix.get(maxRow, col) == 0) {
+            if (isInside(augmentedMatrix.get(maxRow, col))) {
                 continue;
             }
 
@@ -58,30 +60,55 @@ public class GaussJordan {
             }
         }
 
+        return backSubstitutionWithFreeVariables(augmentedMatrix, isPivotColumn, rows, cols);
+    }
+
+    private List<String> backSubstitutionWithFreeVariables(Matrix augmentedMatrix, boolean[] isPivotColumn, int rows,
+            int cols) {
         List<String> solutions = new ArrayList<>();
-        for (int col = 0; col < cols; col++) {
-            if (isPivotColumn[col]) {
-                StringBuilder expression = new StringBuilder("x" + (col + 1) + " = ");
-                double constant = augmentedMatrix.get(col, cols);
-                if (constant != 0) {
-                    expression.append(constant);
-                }
-                boolean firstTerm = constant != 0;
 
-                for (int j = 0; j < cols; j++) {
-                    if (!isPivotColumn[j] && augmentedMatrix.get(col, j) != 0) {
-                        if (firstTerm) {
-                            expression.append(" - ");
-                        } else {
-                            expression.append("-");
-                            firstTerm = true;
-                        }
-                        expression.append(augmentedMatrix.get(col, j) + "t" + (j + 1));
-                    }
-                }
+        for (int row = rows - 1; row >= 0; row--) {
+            int pivotCol = -1;
 
-                solutions.add(expression.toString());
+            for (int col = 0; col < cols; col++) {
+                if (isPivotColumn[col] && !isInside(augmentedMatrix.get(row, col))) {
+                    pivotCol = col;
+                    break;
+                }
+            }
+
+            if (pivotCol == -1) {
+                continue;
+            }
+            StringBuilder expression = new StringBuilder("x" + (pivotCol + 1) + " = ");
+            double constant = augmentedMatrix.get(row, cols);
+
+            if (!isInside(constant)) {
+                expression.append(constant);
             } else {
+                expression.append("0");
+            }
+
+            boolean firstTerm = true;
+
+            for (int col = pivotCol + 1; col < cols; col++) {
+                if (!isPivotColumn[col] && !isInside(augmentedMatrix.get(row, col))) {
+                    double coefficient = augmentedMatrix.get(row, col);
+                    if (firstTerm) {
+                        expression.append(" - ");
+                    } else {
+                        expression.append("-");
+                    }
+                    expression.append(coefficient).append("t").append(col + 1); 
+                    firstTerm = true;
+                }
+            }
+
+            solutions.add(expression.toString());
+        }
+
+        for (int col = 0; col < cols; col++) {
+            if (!isPivotColumn[col]) {
                 solutions.add("x" + (col + 1) + " = t" + (col + 1));
             }
         }
@@ -105,7 +132,6 @@ public class GaussJordan {
         alignMatrix.alignMatrix(matrix);
 
         forwardElimination.forwardElimination(n, m, matrix);
-
         backwardElimination.backwardElimination(n, m, matrix);
         normalizeMatrix.normalizeMatrix(n, m, matrix);
 

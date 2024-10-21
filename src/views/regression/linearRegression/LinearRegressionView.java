@@ -3,10 +3,15 @@ package src.views.regression.linearRegression;
 import java.util.Scanner;
 
 import src.datatypes.Matrix;
+import src.helpers.GetString;
+import src.helpers.Utils;
 import src.views.regression.RegressionView;
+import src.views.Menu;
+import src.views.Pprint;
 
 public class LinearRegressionView extends RegressionView {
-
+    private Menu menu = new Menu();
+    private Pprint pprint = new Pprint();
     @Override
     public void showMenu() {
         System.out.println("Regresi Linear Berganda");
@@ -39,13 +44,14 @@ public class LinearRegressionView extends RegressionView {
         return choice;
     }
 
-    public double getAlpha() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Masukkan alpha: ");
-        return scanner.nextDouble();
+    public void showHeader() {
+        Utils.clearTerminal();
+        String header = "\n\033[1m\033[32m" + GetString.main("regression/linearRegression/header") + "\033[0m";
+        System.out.println(header);
     }
 
     public void printOutput(Matrix beta, Matrix y_pred) {
+        pprint.showResult();
         System.out.print("f(X) = " + String.format("%.2f", beta.get(0, 0)));
 
         for (int i = 1; i < beta.getRowCount(); i++) {

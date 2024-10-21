@@ -2,43 +2,17 @@ package src.views;
 
 import java.util.*;
 import java.io.*;
+
+import src.helpers.GetString;
 import src.helpers.Utils;
 
 public class Menu {
+    private Pprint pprint = new Pprint();
 
-    public String getString(String filename) {
-        try {
-            StringBuilder asciiArt = new StringBuilder();
-
-            BufferedReader reader = new BufferedReader(new FileReader("src/views/" + filename + ".txt"));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                asciiArt.append(line).append("\n"); // Appending each line followed by a new line
-            }
-            reader.close();
-            return asciiArt.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
-
-    public void inputBoundary() {
-        String boundary = "\n\033[1m\033[34m" + getString("input") + "\033[0m";
-
-        System.out.println(boundary);
-
-        System.out.println("\033[1mEnter command in number format.");
-        System.out.print("Input: \033[0m");
-    }
-
-    public void showResult() {
-        String boundary = "\n\033[1m\033[33m" + getString("result") + "\033[0m";
-        System.out.println(boundary);
-    }
+   
 
     public void showMenu() {
-        String coloredAsciiArt = "\033[32m" + getString("ascii") + "\033[0m";
+        String coloredAsciiArt = "\033[32m" + GetString.main("ascii") + "\033[0m";
         System.out.println(coloredAsciiArt);
 
         System.out.println("\033[1m>>> Available Methods:");
@@ -52,7 +26,6 @@ public class Menu {
         System.out.println("8. Keluar");
 
     }
-    
 
     public int getMethod() {
         Scanner scanner = new Scanner(System.in);
@@ -61,7 +34,7 @@ public class Menu {
             System.out.println("\033[1m>>> Available Input Methods:");
             System.out.println("1. File");
             System.out.println("2. Stdin");
-            inputBoundary();
+            pprint.inputBoundary();
             choice = scanner.nextInt();
         } while (choice < 1 || choice > 2);
         return choice;
@@ -74,7 +47,7 @@ public class Menu {
         do {
             Utils.clearTerminal();
             showMenu();
-            inputBoundary();
+            pprint.inputBoundary();
             temp = scanner.nextLine();
             try {
                 choice = Integer.parseInt(temp);

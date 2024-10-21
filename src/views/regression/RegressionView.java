@@ -2,6 +2,7 @@ package src.views.regression;
 
 import src.datatypes.Matrix;
 import src.datatypes.Tuple5;
+import src.helpers.GetString;
 import src.helpers.Utils;
 import src.datatypes.Tuple4;
 import src.datatypes.Tuple3;
@@ -11,36 +12,14 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-
-import src.views.Menu;
+import src.views.Pprint;
 
 public class RegressionView {
-    private Menu menu = new Menu();
-    private String root = "src/views/regression/";
+    private Pprint pprint = new Pprint();
     private String[] filepath = new String[] { "test/linearRegression/", "test/quadraticRegression/" };
 
-    public String getString(String filename) {
-        try {
-            StringBuilder asciiArt = new StringBuilder();
-
-            BufferedReader reader = new BufferedReader(new FileReader(root + filename + ".txt"));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                asciiArt.append(line).append("\n"); // Appending each line followed by a new line
-            }
-            reader.close();
-            return asciiArt.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
-
     public void showMenu() {
-        String coloredAsciiArt = "\033[32m" + getString("header") + "\033[0m";
+        String coloredAsciiArt = "\033[32m" + GetString.main("regression/header") + "\033[0m";
         System.out.println(coloredAsciiArt);
         System.out.println("\033[1m>>> Available Methods:");
         System.out.println("1. Regresi Linear Berganda");
@@ -54,7 +33,7 @@ public class RegressionView {
         do {
             Utils.clearTerminal();
             showMenu();
-            menu.inputBoundary();
+            pprint.inputBoundary();
             choice = scanner.nextInt();
         } while (choice < 1 || choice > 3);
         return choice;
