@@ -36,18 +36,16 @@ public class Determinan {
             n = input.getItem1();
             matrix = input.getItem3();
         } else {
-            pprint.inputMatrix();
             input = view.getInput();
             n = input.getItem1();
+            Utils.printMatrix(input.getItem3());
             matrix = input.getItem3();
         }
     }
 
     public double matrix2x2() {
-
         if (n != 2) {
-            System.out.println("Matriks harus berukuran 2x2.");
-            return Double.NaN; // kalau error return NaN, kalau mau while loop sampai hasil benar boleh
+            return Double.NaN;
         }
 
         Matrix2x2 matrix2x2 = new Matrix2x2();
