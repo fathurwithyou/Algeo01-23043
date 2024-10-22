@@ -18,7 +18,7 @@ public class MatriksBalikanView {
 
     public void showMenu() {
         showHeader(0);
-        System.out.println(">>> Available Methods:");
+        System.out.println("\033[1m>>> Available Methods:");
         System.out.println("1. Metode GaussJordanElimination");
         System.out.println("2. Metode Adjoint");
         System.out.println("3. Keluar");
@@ -35,7 +35,7 @@ public class MatriksBalikanView {
         int choice;
         do {
             showMenu();
-            System.out.print("Pilihan: ");
+            pprint.inputBoundary();
             choice = scanner.nextInt();
         } while (choice < 1 || choice > 3);
         return choice;
@@ -60,7 +60,7 @@ public class MatriksBalikanView {
 
     public Tuple3<Integer, Integer, Matrix> getInputFromFile() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Masukkan nama file: ");
+        System.out.print("\033[1mFilename: ");
         String filename = scanner.nextLine();
         try {
             File file = new File("test/matriksBalikanDeterminan/" + filename + ".txt");

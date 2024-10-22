@@ -17,9 +17,9 @@ public class SistemPersamaanLinierView {
     public void showMenu() {
         showHeader(0);
         System.out.println("\033[1m>>> Available Methods:");
-        System.out.println("1. Metode eliminasi Gauss");
-        System.out.println("2. Metode eliminasi Gauss-Jordan");
-        System.out.println("3. Metode matriks balikan");
+        System.out.println("1. Metode Eliminasi Gauss");
+        System.out.println("2. Metode Eliminasi Gauss-Jordan");
+        System.out.println("3. Metode Matriks Balikan");
         System.out.println("4. Kaidah Cramer");
         System.out.println("5. Keluar");
     }
@@ -115,11 +115,14 @@ public class SistemPersamaanLinierView {
         if (flag != -1) {
             pprint.showResult();
             if (flag == 2) {
-                System.out.println("Sistem persamaan linier memiliki banyak solusi");
+                System.out.println("Sistem persamaan linear memiliki banyak solusi");
             }
             else{
-                System.out.println("Sistem persamaan linier tidak memiliki solusi");
+                System.out.println("Sistem persamaan linear tidak memiliki solusi");
             }
+        }
+        else{
+            System.out.println("Sistem persamaan linear tidak dapat diselesaikan dengan metode ini");
         }
     }
 
@@ -130,7 +133,6 @@ public class SistemPersamaanLinierView {
     }
 
     public void printResult(Array result) {
-        System.out.println("Hasil:");
         for (int i = 0; i < result.getSize(); i++) {
             System.out.println("x" + (i + 1) + " = " + result.get(i));
         }

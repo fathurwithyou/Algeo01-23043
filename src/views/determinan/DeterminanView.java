@@ -21,7 +21,7 @@ public class DeterminanView {
 
     public void showMenu() {
         showHeader(0);
-        System.out.println(">>> Available Methods:");
+        System.out.println("\033[1m>>> Available Methods:");
         System.out.println("1. Determinan matriks 2 x 2");
         System.out.println("2. Metode reduksi baris");
         System.out.println("3. Metode ekspansi kofaktor");

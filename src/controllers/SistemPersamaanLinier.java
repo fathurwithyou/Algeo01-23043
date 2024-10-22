@@ -50,7 +50,7 @@ public class SistemPersamaanLinier {
 
     public Array matriksBalikan() {
         if (isSingular(input.getItem3())) {
-            view.showSingular(0);
+            view.showSingular(-1);
             return null;
         }
         MatriksBalikan matriksBalikan = new MatriksBalikan();
@@ -95,13 +95,12 @@ public class SistemPersamaanLinier {
     }
 
     public Array kaidahCramer() {
-        Matrix augmentedMatrix = view.getSquareInput().getItem3();
-        if (isSingular(augmentedMatrix)) {
-            view.showSingular(0);
+        if (isSingular(matrix)) {
+            view.showSingular(-1);
             return null;
         }
         KaidahCramer kaidahCramer = new KaidahCramer();
-        Matrix result = kaidahCramer.main(augmentedMatrix);
+        Matrix result = kaidahCramer.main(matrix);
         return result.flatten();
     }
 
@@ -116,9 +115,9 @@ public class SistemPersamaanLinier {
             n = input.getItem1();
             m = input.getItem2();
         } else {
-            pprint.inputMatrix();
             input = view.getInput();
             matrix = input.getItem3();
+            Utils.printMatrix(matrix);
         }
     }
 

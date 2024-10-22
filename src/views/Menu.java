@@ -1,7 +1,6 @@
 package src.views;
 
 import java.util.*;
-import java.io.*;
 
 import src.helpers.GetString;
 import src.helpers.Utils;
@@ -12,7 +11,7 @@ public class Menu {
    
 
     public void showMenu() {
-        String coloredAsciiArt = "\033[32m" + GetString.main("ascii") + "\033[0m";
+        String coloredAsciiArt = "\033[1m\033[32m" + GetString.main("ascii") + "\033[0m";
         System.out.println(coloredAsciiArt);
 
         System.out.println("\033[1m>>> Available Methods:");
