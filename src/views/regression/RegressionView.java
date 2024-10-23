@@ -16,7 +16,7 @@ import src.views.Pprint;
 
 public class RegressionView {
     private Pprint pprint = new Pprint();
-    private String[] filepath = new String[] { "test/linearRegression/", "test/quadraticRegression/" };
+    private String[] filepath = new String[] { "test/linearRegression/input/", "test/quadraticRegression/input/" };
 
     public void showMenu() {
         String coloredAsciiArt = "\033[32m" + GetString.main("regression/header") + "\033[0m";
@@ -136,15 +136,6 @@ public class RegressionView {
         } catch (FileNotFoundException e) {
             System.out.println("File tidak ditemukan.");
             return new Tuple5<>(0, 0, new Matrix(0, 0), new Matrix(0, 0), new Matrix(0, 0));
-        }
-    }
-
-    public void printMatrix(Matrix matrix) {
-        for (int i = 0; i < matrix.getRowCount(); i++) {
-            for (int j = 0; j < matrix.getColumnCount(); j++) {
-                System.out.print(matrix.get(i, j) + " ");
-            }
-            System.out.println();
         }
     }
 }

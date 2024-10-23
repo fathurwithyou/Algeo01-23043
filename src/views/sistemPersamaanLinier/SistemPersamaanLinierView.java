@@ -2,6 +2,8 @@ package src.views.sistemPersamaanLinier;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 import src.datatypes.Array;
@@ -81,7 +83,7 @@ public class SistemPersamaanLinierView {
         System.out.print("Masukkan nama file: ");
         String filename = scanner.nextLine();
         try {
-            File file = new File("test/sistemPersamaanLinier/" + filename + ".txt");
+            File file = new File("test/sistemPersamaanLinier/input/" + filename + ".txt");
             Scanner fileScanner = new Scanner(file);
             List<List<Double>> X = new ArrayList<>();
             String[] values;
@@ -136,6 +138,49 @@ public class SistemPersamaanLinierView {
         for (int i = 0; i < result.getSize(); i++) {
             System.out.println("x" + (i + 1) + " = " + result.get(i));
         }
+    }
+
+    public void saveOutput(String result) {
+        Scanner scanner = new Scanner(System.in);
+        do {
+            pprint.showSave();
+            String choice = scanner.nextLine();
+            if (choice.equals("Y") || choice.equals("y")) {
+                break;
+            } else if (choice.equals("N") || choice.equals("n")) {
+                return;
+            } else {
+                System.out.println("Masukkan tidak valid.");
+            }
+        } while (true);
+
+        String folder = "test/sistemPersamaanLinier/output/";
+        String filename;
+
+
+        do {
+            System.out.print("Filename: ");
+            filename = scanner.nextLine();
+            String filePath = folder + filename + ".txt";
+
+            File file = new File(filePath);
+            if (file.exists()) {
+                System.out.println("File already exists. Please choose a different name.");
+            } else {
+                try {
+                    FileWriter writer = new FileWriter(filePath);
+                    writer.write(result);
+                    writer.close();
+
+                    System.out.println("File saved successfully at: " + filePath);
+                    break; 
+                } catch (IOException e) {
+                    System.out.println("Gagal menyimpan file.");
+                    e.printStackTrace();
+                    break;
+                }
+            }
+        } while (true);
     }
 
     public void printMatrix(Matrix matrix) {

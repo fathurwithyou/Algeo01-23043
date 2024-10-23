@@ -1,9 +1,11 @@
 package src.controllers;
 import src.views.Menu;
+import src.views.Pprint;
 
 public class MainController {
     public void main() {
         Menu menu = new Menu();
+        Pprint pprint = new Pprint();
         int choice = menu.getChoice();
         switch (choice) {
             case 1:
@@ -33,6 +35,9 @@ public class MainController {
             case 7:
                 ImageResizingController irc = new ImageResizingController();
                 irc.main();
+                break;
+            case 8:
+                pprint.thanks();
                 break;
             default:
                 break;

@@ -31,8 +31,7 @@ public class SistemPersamaanLinier {
     private Pprint pprint = new Pprint();
     private Tuple3<Integer, Integer, Matrix> input;
     private Matrix matrix;
-    private int n, m;
-
+    private String savedString;
 
     public boolean isSingular(Matrix matrix) {
         if (matrix.getRowCount() != matrix.getColumnCount() - 1) {
@@ -51,6 +50,8 @@ public class SistemPersamaanLinier {
     public Array matriksBalikan() {
         if (isSingular(input.getItem3())) {
             view.showSingular(-1);
+            savedString = "Sistem persamaan linier ini tidak memiliki solusi";
+
             return null;
         }
         MatriksBalikan matriksBalikan = new MatriksBalikan();
@@ -63,11 +64,14 @@ public class SistemPersamaanLinier {
         int sol = check.checkSolutionType(input.getItem3());
         if (sol == 0) {
             view.showSingular(0);
+            savedString = "Sistem persamaan linier ini tidak memiliki solusi";
+
             return null;
         }
         if (sol == 2) {
             view.showSingular(2);
             List<String> res = gaussJordan.gaussJordanFreeVariable(input.getItem3());
+            savedString = res.toString();
             view.showFreeVariable(res);
             return null;
         }
@@ -81,12 +85,14 @@ public class SistemPersamaanLinier {
         int sol = check.checkSolutionType(input.getItem3());
         if (sol == 0) {
             view.showSingular(0);
+            savedString = "Sistem persamaan linier ini tidak memiliki solusi";
             return null;
         }
         if (sol == 2) {
             view.showSingular(2);
             List<String> res = new GaussJordan().gaussJordanFreeVariable(input.getItem3());
             view.showFreeVariable(res);
+            savedString = res.toString();
             return null;
         }
         matrix = getUniqueEquation.main(input.getItem3());
@@ -97,6 +103,8 @@ public class SistemPersamaanLinier {
     public Array kaidahCramer() {
         if (isSingular(matrix)) {
             view.showSingular(-1);
+            savedString = "Sistem persamaan linier ini tidak memiliki solusi";
+
             return null;
         }
         KaidahCramer kaidahCramer = new KaidahCramer();
@@ -112,8 +120,6 @@ public class SistemPersamaanLinier {
             pprint.inputMatrix();
             Utils.printMatrix(input.getItem3());
             matrix = input.getItem3();
-            n = input.getItem1();
-            m = input.getItem2();
         } else {
             input = view.getInput();
             matrix = input.getItem3();
@@ -145,6 +151,12 @@ public class SistemPersamaanLinier {
         if (result != null) {
             pprint.showResult();
             view.printResult(result);
+            savedString = result.toString();
         }
+        String resultString = savedString.substring(1, savedString.length() - 1); 
+        String[] elements = resultString.split(", "); 
+        resultString = String.join("\n", elements);
+        view.saveOutput(resultString);
+        pprint.thanks();
     }
 }

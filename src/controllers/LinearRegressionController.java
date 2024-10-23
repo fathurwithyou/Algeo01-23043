@@ -15,6 +15,7 @@ public class LinearRegressionController {
     private Pprint pprint = new Pprint();
     private LinearRegressionView view = new LinearRegressionView();
     private Matrix y_pred, y, X, X_test;
+    public StringBuilder savedString = new StringBuilder();
 
     public void getInput() {
         view.showHeader();
@@ -37,13 +38,14 @@ public class LinearRegressionController {
     }
 
     public void main() {
-        // int choice = view.getChoice();
         LinearRegression model = null;
         getInput();
         model = new LinearRegression("Ridge", 0.001);
         model.fit(X, y);
         y_pred = model.predict(X_test);
-        view.printOutput(model.getBeta(), y_pred);
+        view.printOutput(model.getBeta(), y_pred, savedString);
+        view.saveOutput(savedString);
+        pprint.thanks();
     }
 
 }

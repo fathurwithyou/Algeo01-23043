@@ -9,6 +9,8 @@ import src.views.Pprint;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
@@ -68,7 +70,7 @@ public class DeterminanView {
         System.out.print("Masukkan path file input: ");
         String filename = scanner.nextLine();
         try {
-            File file = new File("test/matriksBalikanDeterminan/" + filename + ".txt");
+            File file = new File("test/determinan/input/" + filename + ".txt");
             Scanner fileScanner = new Scanner(file);
             List<List<Double>> X = new ArrayList<>();
 
@@ -94,6 +96,48 @@ public class DeterminanView {
             System.out.println("File tidak ditemukan.");
             return new Tuple3<>(0, 0, null);
         }
+    }
+
+    public void saveOutput(Double result) {
+        Scanner scanner = new Scanner(System.in);
+        do {
+            pprint.showSave();
+            String choice = scanner.nextLine();
+            if (choice.equals("Y") || choice.equals("y")) {
+                break;
+            } else if (choice.equals("N") || choice.equals("n")) {
+                return;
+            } else {
+                System.out.println("Masukkan tidak valid.");
+            }
+        } while (true);
+
+        String folder = "test/determinan/output/";
+        String filename;
+
+        do {
+            System.out.print("Filename: ");
+            filename = scanner.nextLine();
+            String filePath = folder + filename + ".txt";
+
+            File file = new File(filePath);
+            if (file.exists()) {
+                System.out.println("File already exists. Please choose a different name.");
+            } else {
+                try {
+                    FileWriter writer = new FileWriter(filePath);
+                    writer.write("Determinan = " + result);
+                    writer.close();
+
+                    System.out.println("File saved successfully at: " + filePath);
+                    break; 
+                } catch (IOException e) {
+                    System.out.println("Gagal menyimpan file.");
+                    e.printStackTrace();
+                    break;
+                }
+            }
+        } while (true);
     }
 
     public void printDeterminant(double determinant) {
