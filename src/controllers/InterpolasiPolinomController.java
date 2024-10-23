@@ -14,8 +14,7 @@ public class InterpolasiPolinomController {
     private InterpolasiPolinomView view = new InterpolasiPolinomView();
     private StringBuilder sb = new StringBuilder();
     private Pprint pprint = new Pprint();
-    private Matrix X, y, X_test, input, y_pred;
-    private Double x;
+    private Matrix X, y, X_test, y_pred;
 
     public void getInput() {
         view.showHeader(0);

@@ -4,7 +4,6 @@ import src.datatypes.Matrix;
 import src.datatypes.Tuple3;
 import src.helpers.GetString;
 import src.helpers.Utils;
-import src.views.Menu;
 import src.views.Pprint;
 
 import java.io.File;
@@ -16,7 +15,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class DeterminanView {
-    private Menu menu = new Menu();
     private Pprint pprint = new Pprint();
     private String filepath[] = new String[] { "determinan/header", "determinan/matrix2x2", "determinan/reduksiBaris",
             "determinan/ekspansiKofaktor" };

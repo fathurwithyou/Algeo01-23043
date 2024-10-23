@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import src.datatypes.Array;
 import src.datatypes.Matrix;
 import src.datatypes.Tuple3;
 import src.helpers.GetString;
@@ -22,7 +24,7 @@ public class BicubicSplineInterpolationView {
         System.out.println(header);
     }
 
-    public Tuple3<Matrix, Double, Double> getInput() {
+    public Tuple3<Matrix, Array, Array> getInput() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Masukkan n (jumlah sampel): ");
         int n = scanner.nextInt();
@@ -34,14 +36,18 @@ public class BicubicSplineInterpolationView {
                 matrix.set(i, j, valueX);
             }
         }
+        Array X_test = new Array(n);
+        Array y_test = new Array(n);
         System.out.print("Masukkan nilai x yang ingin diprediksi: ");
         Double x = scanner.nextDouble();
         System.out.print("Masukkan nilai y yang ingin diprediksi: ");
         Double y = scanner.nextDouble();
-        return new Tuple3<>(matrix, x, y);
+        X_test.set(0, x);
+        y_test.set(0, y);
+        return new Tuple3<>(matrix, X_test, y_test);
     }
 
-    public Tuple3<Matrix, Double, Double> getInputFromFile() {
+    public Tuple3<Matrix, Array, Array> getInputFromFile() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Masukkan path file input: ");
         String filename = scanner.nextLine();
@@ -49,6 +55,8 @@ public class BicubicSplineInterpolationView {
             File file = new File("test/bicubicSplineInterpolation/input/" + filename + ".txt");
             Scanner fileScanner = new Scanner(file);
             List<List<Double>> X = new ArrayList<>();
+            List<Double> X_test = new ArrayList<>();
+            List<Double> y_test = new ArrayList<>();
 
             for (int j = 0; j < 4; j++) {
                 String values[] = fileScanner.nextLine().split("\\s+");
@@ -67,19 +75,29 @@ public class BicubicSplineInterpolationView {
                     matrix.set(i, j, X.get(i).get(j));
                 }
             }
-            String values[] = fileScanner.nextLine().split("\\s+");
-            Double x = Double.parseDouble(values[0]);
-            Double y = Double.parseDouble(values[1]);
+            while (fileScanner.hasNextLine()) {
+                String values[] = fileScanner.nextLine().split("\\s+");
+                Double x = Double.parseDouble(values[0]);
+                Double y = Double.parseDouble(values[1]);
+                X_test.add(x);
+                y_test.add(y);
+            }
 
-            return new Tuple3<>(matrix, x, y);
+            Array test = new Array(X_test.size());
+            Array test2 = new Array(y_test.size());
+            for (int i = 0; i < X_test.size(); i++) {
+                test.set(i, X_test.get(i));
+                test2.set(i, y_test.get(i));
+            }
+            return new Tuple3<>(matrix, test, test2);
 
         } catch (FileNotFoundException e) {
             System.out.println("File tidak ditemukan.");
-            return new Tuple3<>(null, 0.0, 0.0);
+            return new Tuple3<>(null, null, null);
         }
     }
 
-    public void saveOutput(Double pred, Double x, Double y) {
+    public void saveOutput(StringBuilder sb) {
         Scanner scanner = new Scanner(System.in);
 
         do {
@@ -108,11 +126,11 @@ public class BicubicSplineInterpolationView {
             } else {
                 try {
                     FileWriter writer = new FileWriter(filePath);
-                    writer.write("f(" + x + ", " + y + ") = " + pred);
+                    writer.write(sb.toString());
                     writer.close();
 
                     System.out.println("File saved successfully at: " + filePath);
-                    break; 
+                    break;
                 } catch (IOException e) {
                     System.out.println("Gagal menyimpan file.");
                     e.printStackTrace();
@@ -122,8 +140,17 @@ public class BicubicSplineInterpolationView {
         } while (true);
     }
 
-    public void printPrediction(Double result, Double x, Double y) {
-        System.out.print("f(" + x + ", " + y + ") = ");
-        System.out.println(result);
+    public void printPrediction(Double result, Array X_test, Array y_test, Array pred, StringBuilder sb) {
+        for (int i = 0; i < X_test.getSize(); i++) {
+            sb.append("f(")
+                    .append(X_test.get(i))
+                    .append(", ")
+                    .append(y_test.get(i))
+                    .append(") = ")
+                    .append(String.format("%.3f", pred.get(i)))
+                    .append("\n");
+        }
+        System.out.print(sb.toString());
     }
+
 }

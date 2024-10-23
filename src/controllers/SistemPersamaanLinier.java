@@ -13,7 +13,6 @@ import src.datatypes.Tuple3;
 
 // helpers
 import src.helpers.CheckSolutionType;
-import src.helpers.GetConst;
 import src.helpers.GetMainMatrix;
 import src.helpers.GetUniqueEquation;
 import src.helpers.Utils;

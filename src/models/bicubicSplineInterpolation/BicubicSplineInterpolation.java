@@ -1,6 +1,5 @@
 package src.models.bicubicSplineInterpolation;
 
-import src.helpers.Utils;
 import src.datatypes.Array;
 import src.datatypes.Matrix;
 import src.datatypes.Tuple3;

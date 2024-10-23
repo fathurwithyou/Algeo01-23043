@@ -1,5 +1,6 @@
 package src.controllers;
 
+import src.datatypes.Array;
 import src.datatypes.Matrix;
 import src.datatypes.Tuple3;
 import src.helpers.Utils;
@@ -12,7 +13,8 @@ public class BicubicSplineInterpolationController {
     private BicubicSplineInterpolationView view = new BicubicSplineInterpolationView();
     private Pprint pprint = new Pprint();
     private Matrix matrix;
-    private Tuple3<Matrix, Double, Double> input;
+    private Array X_test, y_test;
+    private Tuple3<Matrix, Array, Array> input;
     public Double x, y, result;
 
     public void getInput() {
@@ -24,19 +26,27 @@ public class BicubicSplineInterpolationController {
             input = view.getInput();
         }
         matrix = input.getItem1();
-        x = input.getItem2();
-        y = input.getItem3();
+        X_test = input.getItem2();
+        y_test = input.getItem3();
+        pprint.inputMatrix();
         Utils.printMatrix(input.getItem1());
     }
 
     public void main() {
         BicubicSplineInterpolation model = new BicubicSplineInterpolation();
+        StringBuilder sb = new StringBuilder();
         getInput();
-        model.fit(matrix, input.getItem2(), input.getItem3());
-        result = model.predict(x, y);
+        Array pred = new Array(X_test.getSize());
+        for (int i = 0; i < X_test.getSize(); i++) {
+            x = X_test.get(i);
+            y = y_test.get(i);
+            model.fit(matrix, x, y);
+            result = model.predict(x, y);
+            pred.set(i, result);
+        }
         pprint.showResult();
-        view.printPrediction(result, x, y);        
-        view.saveOutput(result, x, y);
+        view.printPrediction(result, X_test, y_test, pred, sb);        
+        view.saveOutput(sb);
         pprint.thanks();
     }
 }
