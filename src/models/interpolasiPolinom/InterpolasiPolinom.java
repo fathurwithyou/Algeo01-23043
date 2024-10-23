@@ -10,7 +10,7 @@ public class InterpolasiPolinom {
     private Array pers;
 
     public Tuple3<Integer, Integer, Matrix> persamaanLanjar(Integer n, Integer m, Matrix X, Matrix Y) {
-        Matrix aug = new Matrix(n, n+1);
+        Matrix aug = new Matrix(n, n + 1);
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n + 1; j++) {
                 Double x = X.get(i, 0);
@@ -18,7 +18,7 @@ public class InterpolasiPolinom {
             }
             aug.set(i, n, Y.get(i, 0));
         }
-        
+
         return new Tuple3<>(n, n, aug);
     }
 
@@ -41,9 +41,7 @@ public class InterpolasiPolinom {
 
     public Double predict(Double x) {
         Double y = 0.00;
-        System.out.println("beta");
         for (int i = 0; i < pers.getSize(); i++) {
-
             y += pers.get(i) * Math.pow(x, i);
         }
         return y;
