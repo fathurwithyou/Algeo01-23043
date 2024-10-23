@@ -26,7 +26,7 @@ public class InterpolasiPolinom {
         Tuple3<Integer, Integer, Matrix> aug = persamaanLanjar(n, m, X, Y);
 
         pers = gauss.main(aug.getItem3());
-        return pers; // coef of linear equation (a0, a1x, a2x^2 dst)
+        return pers; 
     }
 
     public void fit(Matrix X, Matrix y) {
@@ -39,11 +39,15 @@ public class InterpolasiPolinom {
         return pers;
     }
 
-    public Double predict(Double x) {
-        Double y = 0.00;
-        for (int i = 0; i < pers.getSize(); i++) {
-            y += pers.get(i) * Math.pow(x, i);
+    public Matrix predict(Matrix X_test) {
+        Matrix y_pred = new Matrix(X_test.getRowCount(), 1);
+        for (int i = 0; i < X_test.getRowCount(); i++) {
+            Double y = 0.0;
+            for (int j = 0; j < pers.getSize(); j++) {
+                y += pers.get(j) * Math.pow(X_test.get(i, 0), j);
+            }
+            y_pred.set(i, 0, y);
         }
-        return y;
+        return y_pred;
     }
 }

@@ -7,18 +7,25 @@ import java.io.IOException;
 import java.util.Scanner;
 import javax.imageio.ImageIO;
 
+import src.helpers.GetString;
+import src.helpers.Utils;
+import src.views.Pprint;
+
 public class ImageResizingViews {
     private String filepath = "test/imageResizing/"; 
+    private Pprint pprint = new Pprint();
 
     public void showMenu() {
         showHeader();
-        System.out.println("\033[1m>>> Pilihan:");
+        System.out.println("\033[1m>>> Available Method:");
         System.out.println("1. Proses gambar dari file");
         System.out.println("2. Keluar");
     }
 
     public void showHeader() {
-        System.out.println("\n\033[1m\033[32m=== Aplikasi Pengolahan Gambar ===\033[0m");
+        Utils.clearTerminal();
+        String header = "\n\033[1m\033[32m" + GetString.main("imageResizing/header") + "\033[0m";
+        System.out.println(header);
     }
 
     public int getChoice() {
@@ -26,6 +33,7 @@ public class ImageResizingViews {
         int choice;
         do {
             showMenu();
+            pprint.inputBoundary(false);
             System.out.print("\033[1mMasukkan pilihan: ");
             choice = scanner.nextInt();
         } while (choice < 1 || choice > 2);

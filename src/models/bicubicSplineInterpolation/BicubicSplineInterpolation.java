@@ -24,15 +24,7 @@ public class BicubicSplineInterpolation {
         }
         return grid;
     }
-    
 
-    public Array createGridArray(Matrix grid) {
-        int k = 0;
-        Array gridArray = new Array(16);
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                gridArray.set(k, grid.get(i, j));
-              
     public Matrix createGridArray(Matrix grid) {
         int i, j, k;
         k = 0;
@@ -49,33 +41,44 @@ public class BicubicSplineInterpolation {
     public Matrix createCoefMatrix() {
         Matrix coefMatrix = new Matrix(16, 16);
 
-        //f
+        // f
         coefMatrix.set(0, 0, 1.0);
-        for(int i = 0; i < 4; i++) coefMatrix.set(1, i, 1.0);
-        for(int i = 0; i < 4; i++) coefMatrix.set(2, i * 4, 1.0);
-        for(int i = 0; i < 16; i++) coefMatrix.set(3, i, 1.0);
+        for (int i = 0; i < 4; i++)
+            coefMatrix.set(1, i, 1.0);
+        for (int i = 0; i < 4; i++)
+            coefMatrix.set(2, i * 4, 1.0);
+        for (int i = 0; i < 16; i++)
+            coefMatrix.set(3, i, 1.0);
 
-        //fx
+        // fx
         coefMatrix.set(4, 1, 1.0);
-        for(int i = 0; i < 4; i++) coefMatrix.set(5, i, Double.valueOf(i));
-        for(int i = 1; i < 16; i+=4) coefMatrix.set(6, i , 1.0);
-        for(int i = 0; i < 16; i++) coefMatrix.set(7, i, Double.valueOf(i%4));
+        for (int i = 0; i < 4; i++)
+            coefMatrix.set(5, i, Double.valueOf(i));
+        for (int i = 1; i < 16; i += 4)
+            coefMatrix.set(6, i, 1.0);
+        for (int i = 0; i < 16; i++)
+            coefMatrix.set(7, i, Double.valueOf(i % 4));
 
-        //fy
+        // fy
         coefMatrix.set(8, 4, 1.0);
-        for(int i = 0; i < 4; i++) coefMatrix.set(9, i + 4, 1.0);
-        for(int i = 4; i < 16; i+=4) coefMatrix.set(10, i , Double.valueOf(i/4));
-        for(int i = 0; i < 16; i++) coefMatrix.set(11, i, Double.valueOf(i/4));
+        for (int i = 0; i < 4; i++)
+            coefMatrix.set(9, i + 4, 1.0);
+        for (int i = 4; i < 16; i += 4)
+            coefMatrix.set(10, i, Double.valueOf(i / 4));
+        for (int i = 0; i < 16; i++)
+            coefMatrix.set(11, i, Double.valueOf(i / 4));
 
-        //fxy
+        // fxy
         coefMatrix.set(12, 5, 1.0);
-        for(int i = 0; i < 4; i++) coefMatrix.set(13, i + 4, Double.valueOf(i));
-        for(int i = 5; i < 16; i+=4) coefMatrix.set(14, i , Double.valueOf(i/4));
-        for(int i = 0; i < 16; i++) coefMatrix.set(15, i, Double.valueOf((i%4) * (i/4)));
+        for (int i = 0; i < 4; i++)
+            coefMatrix.set(13, i + 4, Double.valueOf(i));
+        for (int i = 5; i < 16; i += 4)
+            coefMatrix.set(14, i, Double.valueOf(i / 4));
+        for (int i = 0; i < 16; i++)
+            coefMatrix.set(15, i, Double.valueOf((i % 4) * (i / 4)));
 
         return coefMatrix;
-    }    
-    
+    }
 
     public Tuple3<Integer, Integer, Matrix> createAugmentedMatrix(Matrix matrix, Double x, Double y) {
         Matrix gridMatrix = createGrid(matrix, x, y);
@@ -115,4 +118,3 @@ public class BicubicSplineInterpolation {
         return Math.max(0, Math.min(255, result));
     }
 }
-

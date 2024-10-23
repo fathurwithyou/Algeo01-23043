@@ -14,8 +14,8 @@ public class InterpolasiPolinomController {
     private InterpolasiPolinomView view = new InterpolasiPolinomView();
     private StringBuilder sb = new StringBuilder();
     private Pprint pprint = new Pprint();
-    private Matrix X, y, X_test, input;
-    private Double x, y_pred;
+    private Matrix X, y, X_test, input, y_pred;
+    private Double x;
 
     public void getInput() {
         view.showHeader(0);
@@ -39,12 +39,12 @@ public class InterpolasiPolinomController {
         getInput();
         model.fit(X, y);
         
-        y_pred = model.predict(X_test.get(0, 0));
+        y_pred = model.predict(X_test);
         pprint.showData();
         Utils.printData(X, y);
 
 
-        view.printPrediction(model.getPers(), X_test.get(0, 0), y_pred, sb);
+        view.printPrediction(model.getPers(), X_test, y_pred, sb);
         view.saveOutput(sb.toString());
     }
 }   

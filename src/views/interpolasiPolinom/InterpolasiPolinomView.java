@@ -121,7 +121,7 @@ public class InterpolasiPolinomView {
         return new Tuple3<>(n, 1, X);
     }
 
-    public void printPrediction(Array beta, Double X_tst, Double y_pred, StringBuilder sb) {
+    public void printPrediction(Array beta, Matrix X_tst, Matrix y_pred, StringBuilder sb) {
         pprint.showResult(); 
     
         for (int i = 0; i < beta.getSize(); i++) {
@@ -137,7 +137,9 @@ public class InterpolasiPolinomView {
         }
         
         sb.append("\n");
-        sb.append("f(").append(String.format("%.2f", X_tst)).append(") = ").append(String.format("%.2f", y_pred)).append("\n");
+        for(int i = 0; i < X_tst.getRowCount(); i++) {
+            sb.append("f(").append(String.format("%.2f", X_tst.get(i, 0))).append(") = ").append(String.format("%.2f", y_pred.get(i, 0))).append("\n");
+        }
     
         System.out.print(sb.toString()); 
     }
