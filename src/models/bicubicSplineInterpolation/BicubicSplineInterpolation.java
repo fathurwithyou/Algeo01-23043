@@ -1,13 +1,12 @@
 package src.models.bicubicSplineInterpolation;
 
+import src.helpers.Utils;
 import src.datatypes.Array;
 import src.datatypes.Matrix;
 import src.datatypes.Tuple3;
-import src.models.sistemPersamaanLinier.Gauss;
 
 public class BicubicSplineInterpolation {
 
-    private Gauss gauss = new Gauss();
     private Array pers;
 
     public Matrix createGrid(Matrix matrix, Double x, Double y) {
@@ -17,7 +16,7 @@ public class BicubicSplineInterpolation {
         start_x = Math.max(0, start_x);
         start_y = Math.max(0, start_y);
         start_x = Math.min(matrix.getRowCount() - 4, start_x);
-        start_y = Math.min(matrix.getColumnCount() - 4, start_y);        
+        start_y = Math.min(matrix.getColumnCount() - 4, start_y);
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 grid.set(i, j, matrix.get(start_x + i, start_y + j));
@@ -26,67 +25,74 @@ public class BicubicSplineInterpolation {
         return grid;
     }
 
-    public Array createGridArray(Matrix grid) {
+    public Matrix createGridArray(Matrix grid) {
         int i, j, k;
         k = 0;
-        Array gridArray = new Array(16);
+        Matrix gridArray = new Matrix(16, 1);
         for (i = 0; i < 4; i++) {
             for (j = 0; j < 4; j++) {
-                gridArray.set(k, grid.get(i, j));
+                gridArray.set(k, 0, grid.get(i, j));
                 k++;
             }
         }
         return gridArray;
     }
 
-    public Matrix createCoefMatrix(Double x, Double y) {
+    public Matrix createCoefMatrix() {
         Matrix coefMatrix = new Matrix(16, 16);
-        int i, j, row, col;
-        double a, b;
-        
-        row = 0;
-        for (a = (int) Math.floor(x) - 1; a < (int) Math.floor(y) + 3; a++) {
-            for (b = (int) Math.floor(y) - 1; b < (int) Math.floor(y) + 3; b++) {
-                col = 0;
-                for (i = 0; i < 4; i++) {
-                    for (j = 0; j < 4; j++) {
-                        coefMatrix.set(row, col, Math.pow(a, i) * Math.pow(b, j));
-                        col++;
-                    }
-                }
-                row++;
-            }
-        }
+
+        //f
+        coefMatrix.set(0, 0, 1.0);
+        for(int i = 0; i < 4; i++) coefMatrix.set(1, i, 1.0);
+        for(int i = 0; i < 4; i++) coefMatrix.set(2, i * 4, 1.0);
+        for(int i = 0; i < 16; i++) coefMatrix.set(3, i, 1.0);
+
+        //fx
+        coefMatrix.set(4, 1, 1.0);
+        for(int i = 0; i < 4; i++) coefMatrix.set(5, i, Double.valueOf(i));
+        for(int i = 1; i < 16; i+=4) coefMatrix.set(6, i , 1.0);
+        for(int i = 0; i < 16; i++) coefMatrix.set(7, i, Double.valueOf(i%4));
+
+        //fy
+        coefMatrix.set(8, 4, 1.0);
+        for(int i = 0; i < 4; i++) coefMatrix.set(9, i + 4, 1.0);
+        for(int i = 4; i < 16; i+=4) coefMatrix.set(10, i , Double.valueOf(i/4));
+        for(int i = 0; i < 16; i++) coefMatrix.set(11, i, Double.valueOf(i/4));
+
+        //fxy
+        coefMatrix.set(12, 5, 1.0);
+        for(int i = 0; i < 4; i++) coefMatrix.set(13, i + 4, Double.valueOf(i));
+        for(int i = 5; i < 16; i+=4) coefMatrix.set(14, i , Double.valueOf(i/4));
+        for(int i = 0; i < 16; i++) coefMatrix.set(15, i, Double.valueOf((i%4) * (i/4)));
 
         return coefMatrix;
     }
 
-    public Tuple3<Integer, Integer, Matrix> createAugmentedMatrix (Matrix matrix, Double x, Double y) {
-        Matrix gridMatrix = createGrid(matrix, x, y);
-        Array gridArray = createGridArray(gridMatrix);
-        Matrix coefMatrix = createCoefMatrix(x, y); 
-        Matrix aug = new Matrix(16, 17);
+    
 
-        for (int row = 0; row < 16; row++) {
-            for (int col = 0; col < 16; col++) {
-                aug.set(row, col, coefMatrix.get(row, col));
-            }
-            aug.set(row, 16, gridArray.get(row));
-        }
-        
+    public Tuple3<Integer, Integer, Matrix> createAugmentedMatrix(Matrix matrix, Double x, Double y) {
+        Matrix gridMatrix = createGrid(matrix, x, y);
+        Matrix gridArray = createGridArray(gridMatrix);
+        Matrix coefMatrix = createCoefMatrix();
+        Matrix aug = coefMatrix.inverse().multiply(gridArray);
+
         return new Tuple3<>(16, 17, aug);
     }
-    
+
     public Array bicubicSplineInterpolation(Matrix matrix, Double x, Double y) {
         Tuple3<Integer, Integer, Matrix> aug = createAugmentedMatrix(matrix, x, y);
-        pers = gauss.main(aug.getItem3());
+        pers = new Array(16);
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                pers.set(i * 4 + j, aug.getItem3().get(i * 4 + j, 0));
+            }
+        }
         return pers;
     }
-    
-    
+
     public void fit(Matrix matrix, Double x, Double y) {
         pers = bicubicSplineInterpolation(matrix, x, y);
-    } 
+    }
 
     public Double predict(Double x, Double y) {
         Double result;
@@ -94,7 +100,7 @@ public class BicubicSplineInterpolation {
         int k = 0;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                result += pers.get(k)*Math.pow(x, i)*Math.pow(y, j);
+                result += pers.get(k) * Math.pow(x, i) * Math.pow(y, j);
                 k++;
             }
         }

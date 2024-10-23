@@ -18,6 +18,7 @@ public class MatriksBalikanController {
     private DeterminanView inputView = new DeterminanView();
     private AdjoinMethod adjoinMethod = new AdjoinMethod();
     public GaussJordanMethod gaussJordanMethod = new GaussJordanMethod();
+    public StringBuilder savedString = new StringBuilder();
     private Pprint pprint = new Pprint();
     private Matrix matrix;
     private Tuple3<Integer, Integer, Matrix> input;
@@ -33,12 +34,12 @@ public class MatriksBalikanController {
     public Matrix gaussJordanMethod() {
         if (isSingular(matrix)) {
             view.showSingular();
-            return null;
+            savedString.append("Matriks tidak memiliki balikan\n");
         }
         Matrix result = gaussJordanMethod.main(matrix);
         return result;
     }
-
+    
     public void getInput() {
         int method = new Menu().getMethod();
         if (method == 1) {
@@ -56,7 +57,7 @@ public class MatriksBalikanController {
         if (method == 1) {
             input = view.getInputFromFile();
             pprint.inputMatrix();
-            Utils.printMatrix(input.getItem3());
+            Utils.printMatrix(input.getItem3(), new StringBuilder());
             matrix = input.getItem3();
         } else {
             pprint.inputMatrix();
@@ -73,20 +74,22 @@ public class MatriksBalikanController {
                 matrix = gaussJordanMethod();
                 if (matrix != null) {
                     pprint.showResult();
-                    Utils.printMatrix(matrix);
+                    Utils.printMatrix(matrix, savedString);
                 }
                 break;
             case 2:
                 matrix = adjoinMethod();
                 if (matrix != null) {
                     pprint.showResult();
-                    Utils.printMatrix(matrix);
+                    Utils.printMatrix(matrix, savedString);
                 }
                 break;
             case 3:
                 System.out.println("Keluar");
                 break;
         }
+        view.saveOutput(savedString.toString());
+
     }
 
 }

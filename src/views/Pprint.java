@@ -5,14 +5,20 @@ import src.helpers.GetString;
 public class Pprint {
     private String root = "src/views/";
 
+    public void showSave() {
+        String boundary = "\n\033[1m\033[95m" + GetString.main("save") + "\033[0m";
+        System.out.println(boundary);
+        System.out.print("Want to save the result? (Y/N): ");
+    }
+
     public void thanks() {
         String boundary = "\n\033[1m\033[36m" + GetString.main("thanks") + "\033[0m";
         System.out.print(boundary);
     }
 
-    public void inputMatrix(){
+    public void inputMatrix() {
         String boundary = "\n\033[1m\033[31m" + GetString.main("matrix") + "\033[0m";
-        System.out.println(boundary);        
+        System.out.println(boundary);
     }
 
     public void inputBoundary(boolean all) {

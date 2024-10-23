@@ -5,6 +5,7 @@ import java.util.List;
 
 import src.models.determinan.EkspansiKofaktor;
 import src.models.matriksBalikan.AdjoinMethod;
+import src.models.matriksBalikan.GaussJordanMethod;
 
 public class Matrix {
     private List<List<Double>> data;
@@ -109,7 +110,7 @@ public class Matrix {
     }
 
     public Matrix inverse() {
-        return new AdjoinMethod().main(this);
+        return new GaussJordanMethod().main(this);
     }
 
     public Matrix multiply(Matrix other) {

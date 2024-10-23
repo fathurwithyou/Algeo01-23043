@@ -19,6 +19,7 @@ public class Determinan {
     private DeterminanView view;
     private Matrix matrix;
     private Tuple3<Integer, Integer, Matrix> input;
+    private Double result;
     private int n;
     private Pprint pprint = new Pprint();
 
@@ -69,19 +70,19 @@ public class Determinan {
         getInput(choice);
         switch (choice) {
             case 1:
-                double matrix2x2_result = matrix2x2();
-                view.printDeterminant(matrix2x2_result);
+                result = matrix2x2();
                 break;
             case 2:
-                double reduksibaris_result = reduksiBaris();
-                view.printDeterminant(reduksibaris_result);
+                result = reduksiBaris();
                 break;
             case 3:
-                double ekspansikofaktor_result = ekspansiKofaktor();
-                view.printDeterminant(ekspansikofaktor_result);
+                result = ekspansiKofaktor();
                 break;
             default:
                 break;
         }
+        view.printDeterminant(result);
+        view.saveOutput(result);
+        pprint.thanks();
     }
 }

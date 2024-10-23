@@ -12,6 +12,7 @@ import src.views.Pprint;
 
 public class InterpolasiPolinomController {
     private InterpolasiPolinomView view = new InterpolasiPolinomView();
+    private StringBuilder sb = new StringBuilder();
     private Pprint pprint = new Pprint();
     private Matrix X, y, X_test, input;
     private Double x, y_pred;
@@ -43,6 +44,7 @@ public class InterpolasiPolinomController {
         Utils.printData(X, y);
 
 
-        view.printPrediction(model.getPers(), X_test.get(0, 0), y_pred);
+        view.printPrediction(model.getPers(), X_test.get(0, 0), y_pred, sb);
+        view.saveOutput(sb.toString());
     }
 }   

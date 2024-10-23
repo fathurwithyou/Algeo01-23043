@@ -1,13 +1,8 @@
 package src.controllers;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
 import src.datatypes.Matrix;
 import src.datatypes.Tuple3;
+import src.helpers.Utils;
 import src.models.bicubicSplineInterpolation.BicubicSplineInterpolation;
 import src.views.Menu;
 import src.views.bicubicSplineInterpolation.BicubicSplineInterpolationView;
@@ -31,6 +26,7 @@ public class BicubicSplineInterpolationController {
         matrix = input.getItem1();
         x = input.getItem2();
         y = input.getItem3();
+        Utils.printMatrix(input.getItem1());
     }
 
     public void main() {
@@ -39,6 +35,8 @@ public class BicubicSplineInterpolationController {
         model.fit(matrix, input.getItem2(), input.getItem3());
         result = model.predict(x, y);
         pprint.showResult();
-        view.printPrediction(result, x, y);
+        view.printPrediction(result, x, y);        
+        view.saveOutput(result, x, y);
+        pprint.thanks();
     }
 }

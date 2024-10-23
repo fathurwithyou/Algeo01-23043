@@ -28,16 +28,36 @@ public class Utils {
         int sign = 0;
         int col = matrix.getColumnCount();
         for (int i = 0; i < matrix.getRowCount(); i++) {
-            max = Math.max(max, Math.abs(matrix.get(i, col - 1)));
-            sign |= matrix.get(i, col - 1) < 0 ? 1 : 0;
+            max = Math.max(max, Math.abs(matrix.get(i, col - 1)) + matrix.get(i, col - 1) < 0 ? 1 : 0);
         }
         return (int) max / 10 + 2 + sign;
     }
 
+    public static void printMatrix(Matrix matrix, StringBuilder savedString) {
+        int col = matrix.getColumnCount();
+        int prec = 2; // Precision for floating-point numbers
+        int w = 7;    
+        int maxr = len(matrix) + prec;
+    
+        for (int i = 0; i < matrix.getRowCount(); i++) {
+            savedString.append('['); // Start the row with '['
+            for (int j = 0; j < matrix.getColumnCount() - 1; j++) {
+                savedString.append(String.format("%-" + w + "." + prec + "f", matrix.get(i, j)));
+                savedString.append("   "); // Add spacing between elements
+            }
+            // Append the last element in the row with a larger width (maxr)
+            savedString.append(String.format("%-" + maxr + "." + prec + "f", matrix.get(i, col - 1)));
+            savedString.append(']'); // Close the row with ']'
+            savedString.append("\n"); 
+        }
+        System.out.println(savedString.toString());
+    }
+    
+
     public static void printMatrix(Matrix matrix) {
         int col = matrix.getColumnCount();
         int prec = 2;
-        int w = 7; // Set a fixed width for alignment (adjust as needed)
+        int w = 7; 
         int maxr = len(matrix) + prec;
         for (int i = 0; i < matrix.getRowCount(); i++) {
             System.out.print('[');

@@ -14,6 +14,7 @@ import src.models.quadraticRegression.QuadraticRegression;
 
 public class QuadraticRegressionController {
     private QuadraticRegressionView view = new QuadraticRegressionView();
+    private StringBuilder savedString = new StringBuilder();
     private Pprint pprint = new Pprint();
     private Matrix y_pred, y, X, X_test;
 
@@ -44,6 +45,7 @@ public class QuadraticRegressionController {
         QuadraticRegression model = new QuadraticRegression("Ridge", 0);
         model.fit(X, y);
         y_pred = model.predict(X_test);
-        view.printOutput(model.getBeta(), y_pred, X.getColumnCount());
+        view.printOutput(model.getBeta(), y_pred, X.getColumnCount(), savedString);
+        view.saveOutput(savedString);
     }
 }
