@@ -32,7 +32,10 @@ public class MainController {
                 RegressionController rc = new RegressionController();
                 rc.main();
                 break;
-
+            case 7:
+                ImageResizingController irc = new ImageResizingController();
+                irc.main();
+                break;
             case 8:
                 pprint.thanks();
                 break;

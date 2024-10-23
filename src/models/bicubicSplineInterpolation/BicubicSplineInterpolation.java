@@ -24,7 +24,15 @@ public class BicubicSplineInterpolation {
         }
         return grid;
     }
+    
 
+    public Array createGridArray(Matrix grid) {
+        int k = 0;
+        Array gridArray = new Array(16);
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                gridArray.set(k, grid.get(i, j));
+              
     public Matrix createGridArray(Matrix grid) {
         int i, j, k;
         k = 0;
@@ -66,8 +74,7 @@ public class BicubicSplineInterpolation {
         for(int i = 0; i < 16; i++) coefMatrix.set(15, i, Double.valueOf((i%4) * (i/4)));
 
         return coefMatrix;
-    }
-
+    }    
     
 
     public Tuple3<Integer, Integer, Matrix> createAugmentedMatrix(Matrix matrix, Double x, Double y) {
@@ -95,15 +102,17 @@ public class BicubicSplineInterpolation {
     }
 
     public Double predict(Double x, Double y) {
-        Double result;
-        result = 0.0;
+        Double result = 0.0;
         int k = 0;
+
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 result += pers.get(k) * Math.pow(x, i) * Math.pow(y, j);
                 k++;
             }
         }
-        return result;
+
+        return Math.max(0, Math.min(255, result));
     }
 }
+
