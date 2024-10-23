@@ -5,6 +5,11 @@ import src.helpers.GetString;
 public class Pprint {
     private String root = "src/views/";
 
+    public void thanks() {
+        String boundary = "\n\033[1m\033[36m" + GetString.main("thanks") + "\033[0m";
+        System.out.print(boundary);
+    }
+
     public void inputMatrix(){
         String boundary = "\n\033[1m\033[31m" + GetString.main("matrix") + "\033[0m";
         System.out.println(boundary);        

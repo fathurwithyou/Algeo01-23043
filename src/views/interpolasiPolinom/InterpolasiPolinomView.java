@@ -1,29 +1,138 @@
 package src.views.interpolasiPolinom;
 
-import  java.util.Scanner;
+import java.util.Scanner;
 import src.datatypes.Matrix;
+import src.datatypes.Tuple3;
 import src.datatypes.Tuple4;
+import src.datatypes.Tuple5;
+import src.helpers.GetString;
+import src.helpers.Utils;
+import src.views.Pprint;
+import src.datatypes.Array;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class InterpolasiPolinomView {
+    Pprint pprint = new Pprint();
+    String filepath[] = new String[] { "interpolasiPolinom/header" };
+    String ptest = "test/interpolasiPolinom/";
+
+    public void showHeader(int c) {
+        Utils.clearTerminal();
+        String header = "\n\033[1m\033[32m" + GetString.main(filepath[c]) + "\033[0m";
+        System.out.println(header);
+    }
+
     public Tuple4<Integer, Integer, Matrix, Matrix> getInput() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Masukkan n (jumlah sampel): ");
         int n = scanner.nextInt();
-        Matrix X = new Matrix(n+1, 1);
-        Matrix Y = new Matrix (n, 1); //sampai sini
+        Matrix X = new Matrix(n, 1);
+        Matrix Y = new Matrix(n, 1); // sampai sini
         System.out.println("Masukkan x y:");
         for (int i = 0; i < n; i++) {
             Double valueX = scanner.nextDouble();
             X.set(i, 0, valueX);
             Double valueY = scanner.nextDouble();
-            Y.set(i, 0, valueY);  
+            Y.set(i, 0, valueY);
         }
-        Double value = scanner.nextDouble();
-        X.set(n, 0, value); //x test
-        return new Tuple4<>(n+1, 1, X, Y);
+        return new Tuple4<>(n, 1, X, Y);
     }
 
-    public void printPrediction(Double y) {
-        System.out.println(y);
+    public Tuple5<Integer, Integer, Matrix, Matrix, Matrix> getInputFromFile(int degree) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Masukkan path file input: ");
+        String filename = scanner.nextLine();
+        try {
+            File file = new File(ptest + filename + ".txt");
+            Scanner fileScanner = new Scanner(file);
+            int m, n;
+            List<List<Double>> XList = new ArrayList<>();
+            List<Double> YList = new ArrayList<>();
+            List<List<Double>> test = new ArrayList<>();
+            List<Double> row = new ArrayList<>();
+
+            String[] values = fileScanner.nextLine().split("\\s+");
+            n = values.length;
+            for (int i = 0; i < n - 1; i++) {
+                row.add(Double.parseDouble(values[i]));
+            }
+            XList.add(row);
+            YList.add(Double.parseDouble(values[n - 1]));
+
+            while (fileScanner.hasNextLine()) {
+                values = fileScanner.nextLine().split("\\s+");
+                row = new ArrayList<>();
+                if (values.length != n) {
+                    for (int i = 0; i < values.length; i++) {
+                        row.add(Double.parseDouble(values[i]));
+                    }
+                    test.add(row);
+                    continue;
+                }
+                for (int i = 0; i < values.length; i++) {
+                    if (i == values.length - 1) {
+                        YList.add(Double.parseDouble(values[i]));
+                    } else {
+                        row.add(Double.parseDouble(values[i]));
+                    }
+                }
+                XList.add(row);
+            }
+            Matrix X = new Matrix(XList.size(), n - 1);
+            Matrix Y = new Matrix(XList.size(), 1);
+            Matrix X_test = new Matrix(test.size(), n - 1);
+
+            for (int i = 0; i < XList.size(); i++) {
+                for (int j = 0; j < n - 1; j++) {
+                    X.set(i, j, XList.get(i).get(j));
+                }
+                Y.set(i, 0, YList.get(i));
+            }
+            for (int i = 0; i < test.size(); i++) {
+                for (int j = 0; j < n - 1; j++) {
+                    X_test.set(i, j, test.get(i).get(j));
+                }
+            }
+
+            m = XList.size();
+            return new Tuple5<>(m, n, X, Y, X_test);
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File tidak ditemukan.");
+            return new Tuple5<>(0, 0, new Matrix(0, 0), new Matrix(0, 0), new Matrix(0, 0));
+        }
+
+    }
+
+    public Tuple3<Integer, Integer, Matrix> getInputToPredict(int n) {
+        Scanner scanner = new Scanner(System.in);
+        Matrix X = new Matrix(n, 1);
+        System.out.println("Masukkan nilai yang ingin diprediksi:");
+        for (int i = 0; i < n; i++) {
+            Double value = scanner.nextDouble();
+            X.set(i, 0, value);
+        }
+        return new Tuple3<>(n, 1, X);
+    }
+
+    public void printPrediction(Array beta, Double X_tst, Double y_pred) {
+        pprint.showResult();
+        for (int i = 0; i < beta.getSize(); i++) {
+            if (i == 0) {
+                System.out.print("f(x) = " + String.format("%.2f", beta.get(i)));
+            } else {
+                if (beta.get(i) >= 0) {
+                    System.out.print(" + " + String.format("%.2f", beta.get(i)) + "x^" + i);
+                } else {
+                    System.out.print(" - " + String.format("%.2f", Math.abs(beta.get(i))) + "x^" + i);
+                }
+            }
+        }
+        System.out.println();
+        System.out.println("f("+ String.format("%.2f", X_tst) + ") = " + String.format("%.2f", y_pred));
     }
 }

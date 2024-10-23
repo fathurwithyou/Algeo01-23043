@@ -32,18 +32,6 @@ public class LinearRegressionView extends RegressionView {
         return choice;
     }
 
-    public int getMethod() {
-        Scanner scanner = new Scanner(System.in);
-        int choice;
-        do {
-            System.out.println("1. File");
-            System.out.println("2. Stdin");
-            System.out.print("Pilihan: ");
-            choice = scanner.nextInt();
-        } while (choice < 1 || choice > 2);
-        return choice;
-    }
-
     public void showHeader() {
         Utils.clearTerminal();
         String header = "\n\033[1m\033[32m" + GetString.main("regression/linearRegression/header") + "\033[0m";
