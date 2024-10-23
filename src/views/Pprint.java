@@ -3,8 +3,6 @@ package src.views;
 import src.helpers.GetString;
 
 public class Pprint {
-    private String root = "src/views/";
-
     public void showSave() {
         String boundary = "\n\033[1m\033[95m" + GetString.main("save") + "\033[0m";
         System.out.println(boundary);
