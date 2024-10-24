@@ -5,7 +5,6 @@ import src.models.sistemPersamaanLinier.Gauss;
 import src.datatypes.Array;
 
 public class LinearRegression {
-    private Gauss gauss = new Gauss();
     private Matrix beta;
     private String method;
     private double alpha;
