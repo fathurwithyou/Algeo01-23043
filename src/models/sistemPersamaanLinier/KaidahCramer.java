@@ -1,13 +1,10 @@
 package src.models.sistemPersamaanLinier;
 
 import src.datatypes.Matrix;
-import src.models.determinan.ReduksiBaris;
 import src.helpers.GetConst;
 import src.helpers.MatrixCopy;
 
 public class KaidahCramer {
-    private CheckConsistency checkConsistency = new CheckConsistency();
-    private ReduksiBaris reduksiBaris = new ReduksiBaris();
     private MatrixCopy matrixCopy = new MatrixCopy();
     private GetConst getConst = new GetConst();
 
