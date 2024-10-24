@@ -1,6 +1,6 @@
 
-   # Aljabar Linier dan Geometri Solver
-
+   # Aljabar Linear dan Geometri Solver
+![alt text](image.png)
    This project is a Java-based application designed to solve linear algebra problems and provide geometric interpretations. It supports a variety of matrix operations and geometric calculations.
 
    ## Features

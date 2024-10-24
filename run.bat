@@ -4,3 +4,4 @@ javac -d bin Main.java
 
 rem Run the compiled Java code
 java -cp bin Main
+
