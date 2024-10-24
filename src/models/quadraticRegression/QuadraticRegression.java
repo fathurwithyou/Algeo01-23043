@@ -1,6 +1,8 @@
 package src.models.quadraticRegression;
 
+import src.datatypes.Array;
 import src.datatypes.Matrix;
+import src.models.sistemPersamaanLinier.Gauss;
 
 public class QuadraticRegression {
     private Matrix beta;
@@ -43,21 +45,31 @@ public class QuadraticRegression {
                 }
             }
         }
-
         return X_quadratic;
     }
 
     public void fit(Matrix X, Matrix y) {
         Matrix X_quadratic = processX(X);
-        int newCols = X_quadratic.getColumnCount();
-        Matrix I = Matrix.identity(newCols);
+        int n = X_quadratic.getColumnCount();
+        Matrix I = Matrix.identity(n);
         Matrix X_transpose = X_quadratic.transpose();
         Matrix X_transpose_X = X_transpose.multiply(X_quadratic);
         Matrix regularizationTerm = I.multiplyConst(alpha);
         Matrix X_transpose_y = X_transpose.multiply(y);
+        X_transpose_X = X_transpose_X.add(regularizationTerm);
 
-        // beta = (X^T * X + lambda * I)^(-1) * X^T * y
-        beta = (X_transpose_X.add(regularizationTerm)).inverse().multiply(X_transpose_y);
+        Matrix aug = new Matrix(n, n + 1);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                aug.set(i, j, X_transpose_X.get(i, j));
+            }
+            aug.set(i, n, X_transpose_y.get(i, 0));
+        }
+        Array beta = new Gauss().main(aug);
+        this.beta = new Matrix(n, 1);
+        for (int i = 0; i < n; i++) {
+            this.beta.set(i, 0, beta.get(i));
+        }
     }
 
     public Matrix predict(Matrix X) {
