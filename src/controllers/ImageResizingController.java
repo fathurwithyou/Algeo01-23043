@@ -27,7 +27,7 @@ public class ImageResizingController {
                 view.showCompletionMessage();
             }
         } else {
-            System.out.println("Keluar");
+            pprint.thanks();
         }
     }
 }

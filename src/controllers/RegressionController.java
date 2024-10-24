@@ -1,10 +1,11 @@
 package src.controllers;
 
 import src.views.regression.RegressionView;
-
+import src.views.Pprint;
 
 public class RegressionController {
     private RegressionView view = new RegressionView();
+    private Pprint pprint = new Pprint();
     private LinearRegressionController LinearRegressionController = new LinearRegressionController();
     private QuadraticRegressionController QuadraticRegressionController = new QuadraticRegressionController();
 
@@ -19,8 +20,7 @@ public class RegressionController {
                 QuadraticRegressionController.main();
                 break;
             case 3:
-
-                System.out.println("Keluar");
+                pprint.thanks();
                 break;
         }
     }

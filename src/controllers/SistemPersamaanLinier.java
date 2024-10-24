@@ -128,6 +128,10 @@ public class SistemPersamaanLinier {
 
     public void main() {
         int choice = view.getChoice();
+        if (choice == 5) {
+            pprint.thanks();
+            return;
+        }
         getInput(choice);
         Array result = null;
         switch (choice) {
@@ -142,8 +146,8 @@ public class SistemPersamaanLinier {
                 break;
             case 4:
                 result = kaidahCramer();
-
                 break;
+    
             default:
                 break;
         }
