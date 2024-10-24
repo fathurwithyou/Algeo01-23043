@@ -30,6 +30,9 @@ public class ReduksiBaris {
                 determinant = 0;
                 return;
             }
+            if(maxRow != pivot){
+                determinant *= -1;
+            }
 
             swapRows.swapRows(augmentedMatrix, pivot, maxRow);
             double pivotElement = augmentedMatrix.get(pivot, pivot);
