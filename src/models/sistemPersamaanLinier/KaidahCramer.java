@@ -36,22 +36,12 @@ public class KaidahCramer {
             }
         }
 
-        int flag = checkConsistency.checkConsistency(n, n, augmentedMatrix);
-        if (flag != -1) {
-            Matrix singular = new Matrix(1, 1);
-            singular.set(0, 0, (double) flag);
-            return singular;
-        }
-
-        double detA = reduksiBaris.main(matrixCopy.copy(coefMatrix)); 
-        if (detA == 0) {
-            return null;
-        }
+        double detA = matrixCopy.copy(coefMatrix).determinant(); 
         
         Matrix solution = new Matrix(n, 1); 
         for (int i = 0; i < n; i++) {
             Matrix replacedMatrix = replaceColumn(n, matrixCopy.copy(coefMatrix), i, constMatrix);
-            double detAi = reduksiBaris.main(replacedMatrix); 
+            double detAi = replacedMatrix.determinant() ; 
             solution.set(i, 0, detAi / detA);
         }
 
