@@ -7,7 +7,7 @@ import src.helpers.SwapRows;
 
 public class Gauss {
     private SwapRows swapRows = new SwapRows();
-    private double EPSILON = 1e-6;
+    public double EPSILON = 1e-7;
 
     public boolean isNearZero(double x) {
         return Math.abs(x) < EPSILON;
