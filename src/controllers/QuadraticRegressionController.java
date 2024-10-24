@@ -33,9 +33,9 @@ public class QuadraticRegressionController {
             Tuple4<Integer, Integer, Matrix, Matrix> input = view.getInput();
             X = input.getItem3();
             y = input.getItem4();
+            Tuple3<Integer, Integer, Matrix> inputToPredict = view.getInputToPredict(input.getItem1());
             pprint.showData();
             Utils.printData(X, y);
-            Tuple3<Integer, Integer, Matrix> inputToPredict = view.getInputToPredict(input.getItem1());
             X_test = inputToPredict.getItem3();
         }
     }

@@ -36,8 +36,8 @@ public class BicubicSplineInterpolationView {
                 matrix.set(i, j, valueX);
             }
         }
-        Array X_test = new Array(n);
-        Array y_test = new Array(n);
+        Array X_test = new Array(1);
+        Array y_test = new Array(1);
         System.out.print("Masukkan nilai x yang ingin diprediksi: ");
         Double x = scanner.nextDouble();
         System.out.print("Masukkan nilai y yang ingin diprediksi: ");

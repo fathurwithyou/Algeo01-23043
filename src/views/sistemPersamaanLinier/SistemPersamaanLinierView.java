@@ -14,8 +14,11 @@ import src.helpers.Utils;
 import src.views.Pprint;
 
 public class SistemPersamaanLinierView {
-    private String[] filepath = new String[] { "sistemPersamaanLinier/header", "sistemPersamaanLinier/gauss", "sistemPersamaanLinier/gaussJordan", "sistemPersamaanLinier/matriksBalikan", "sistemPersamaanLinier/kaidahCramer" };
+    private String[] filepath = new String[] { "sistemPersamaanLinier/header", "sistemPersamaanLinier/gauss",
+            "sistemPersamaanLinier/gaussJordan", "sistemPersamaanLinier/matriksBalikan",
+            "sistemPersamaanLinier/kaidahCramer" };
     private Pprint pprint = new Pprint();
+
     public void showMenu() {
         showHeader(0);
         System.out.println("\033[1m>>> Available Methods:");
@@ -54,7 +57,7 @@ public class SistemPersamaanLinierView {
         Matrix coefMatrix = new Matrix(n, m + 1);
         System.out.println("Masukkan matriks augmented:");
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m+1; j++) {
+            for (int j = 0; j < m + 1; j++) {
                 Double value = scanner.nextDouble();
                 coefMatrix.set(i, j, value);
             }
@@ -105,7 +108,7 @@ public class SistemPersamaanLinierView {
                     tmp.set(i, j, X.get(i).get(j));
                 }
             }
-            return new Tuple3<>(n, m-1, tmp);
+            return new Tuple3<>(n, m - 1, tmp);
 
         } catch (FileNotFoundException e) {
             System.out.println("File tidak ditemukan.");
@@ -114,16 +117,14 @@ public class SistemPersamaanLinierView {
     }
 
     public void showSingular(int flag) {
+        pprint.showResult();
         if (flag != -1) {
-            pprint.showResult();
             if (flag == 2) {
                 System.out.println("Sistem persamaan linear memiliki banyak solusi");
-            }
-            else{
+            } else {
                 System.out.println("Sistem persamaan linear tidak memiliki solusi");
             }
-        }
-        else{
+        } else {
             System.out.println("Sistem persamaan linear tidak dapat diselesaikan dengan metode ini");
         }
     }
@@ -150,13 +151,12 @@ public class SistemPersamaanLinierView {
             } else if (choice.equals("N") || choice.equals("n")) {
                 return;
             } else {
-                System.out.println("Masukkan tidak valid.");
+                System.out.println("Masukan tidak valid.");
             }
         } while (true);
 
         String folder = "test/sistemPersamaanLinier/output/";
         String filename;
-
 
         do {
             System.out.print("Filename: ");
@@ -173,7 +173,7 @@ public class SistemPersamaanLinierView {
                     writer.close();
 
                     System.out.println("File saved successfully at: " + filePath);
-                    break; 
+                    break;
                 } catch (IOException e) {
                     System.out.println("Gagal menyimpan file.");
                     e.printStackTrace();
