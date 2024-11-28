@@ -109,7 +109,7 @@ public class BicubicSplineInterpolation {
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                result += pers.get(k) * Math.pow(x, i) * Math.pow(y, j);
+                result += pers.get(k) * Math.pow(x, j) * Math.pow(y, i);
                 k++;
             }
         }
